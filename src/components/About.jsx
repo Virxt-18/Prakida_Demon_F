@@ -36,7 +36,7 @@ const About = () => {
                             Where Sportsmanship Meets <span className="text-prakida-flame">The Hashira Spirit</span>
                         </h3>
                         <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                            PRAKIDA is not just a sports fest; it's a battleground where potential meets opportunity. Inspired by the legendary Demon Slayer Corps, we bring you an arena where every athlete channels the strength, speed, and precision of the Hashira.
+                            PRAKRIDA is not just a sports fest; it's a battleground where potential meets opportunity. Inspired by the legendary Demon Slayer Corps, we bring you an arena where every athlete channels the strength, speed, and precision of the Hashira.
                         </p>
                         <p className="text-gray-400 text-lg leading-relaxed">
                             Join us for 3 days of intense competition, camaraderie, and celebration. Whether you strike like lightning or flow like water, this is your stage to ascend.

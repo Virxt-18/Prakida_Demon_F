@@ -1,13 +1,28 @@
 import { motion } from 'framer-motion';
 import ParallaxElement from './ui/ParallaxElement';
 
+import gallery1 from '../assets/gallery-1.jpg';
+import gallery2 from '../assets/gallery-2.jpg';
+import gallery3 from '../assets/gallery-3.jpg';
+import gallery4 from '../assets/gallery-4.jpg';
+import gallery5 from '../assets/gallery-5.jpg';
+import gallery6 from '../assets/gallery-6.jpg';
+import gallery7 from '../assets/gallery-7.jpg';
+import gallery8 from '../assets/gallery-8.jpg';
+import gallery9 from '../assets/gallery-9.jpg';
+import gallery10 from '../assets/gallery-10.jpg';
+
 const images = [
-    { src: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=600&auto=format&fit=crop", alt: "Victory Moment", span: "md:col-span-2 md:row-span-2" },
-    { src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=600&auto=format&fit=crop", alt: "Intense Match", span: "md:col-span-1 md:row-span-1" },
-    { src: "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=600&auto=format&fit=crop", alt: "Crowd Cheering", span: "md:col-span-1 md:row-span-1" },
-    { src: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=600&auto=format&fit=crop", alt: "Trophy Lift", span: "md:col-span-1 md:row-span-2" },
-    { src: "https://images.unsplash.com/photo-1519861531473-920026393112?q=80&w=600&auto=format&fit=crop", alt: "Basketball Dunk", span: "md:col-span-1 md:row-span-1" },
-    { src: "https://images.unsplash.com/photo-1628779238951-be2c9f2faf2f?q=80&w=600&auto=format&fit=crop", alt: "Cricket Shot", span: "md:col-span-2 md:row-span-1" },
+    { src: gallery1, alt: "DJ Night", span: "md:col-span-2 md:row-span-2", speed: 0.1 }, // 1. DJ (Anchor, slow)
+    { src: gallery3, alt: "Board Games", span: "md:col-span-1 md:row-span-2", speed: 0.3 }, // 2. Board (Faster)
+    { src: gallery6, alt: "Badminton Smash", span: "md:col-span-1 md:row-span-2", speed: -0.5 }, // 3. Smash (Reverse depth)
+    { src: gallery4, alt: "Football Kick", span: "md:col-span-2 md:row-span-2", speed: 0.2 }, // 5. Football
+    { src: gallery10, alt: "Speech & Crowd", span: "md:col-span-2 md:row-span-2", speed: -0.6 }, // 7. Speech (Anchor)
+    { src: gallery7, alt: "Chess Focus", span: "md:col-span-2 md:row-span-2", speed: 0.3 }, // 8. Chess
+    { src: gallery8, alt: "Table Tennis", span: "md:col-span-2 md:row-span-2", speed: -0.6 }, // 9. TT
+    { src: gallery9, alt: "Basketball Dribble", span: "md:col-span-2 md:row-span-2", speed: 0.2 }, // 10. Basketball
+    { src: gallery5, alt: "Badminton", span: "md:col-span-1 md:row-span-2", speed: -0.4 }, // 6. Badminton
+    { src: gallery2, alt: "Carrom Match", span: "md:col-span-1 md:row-span-2", speed: 0.1 },// 4. Carrom
 ];
 
 const Gallery = () => {
@@ -26,7 +41,7 @@ const Gallery = () => {
                     {images.map((img, idx) => (
                         <ParallaxElement
                             key={idx}
-                            speed={idx % 2 === 0 ? 0.2 : -0.2}
+                            speed={img.speed}
                             className={`relative group overflow-hidden rounded-sm border border-white/10 bg-white/5 ${img.span}`}
                             enableMobile={false}
                         >
@@ -41,7 +56,7 @@ const Gallery = () => {
                                     <img
                                         src={img.src}
                                         alt={img.alt}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                                        className="w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-110 filter grayscale group-hover:grayscale-0"
                                     />
                                 </div>
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">

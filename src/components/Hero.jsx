@@ -171,10 +171,10 @@ const Hero = () => {
 
                         <motion.div whileHover={buttonHover} whileTap={buttonTap}>
                             <Link
-                                to="/events"
+                                to="/register"
                                 className="block group px-6 py-3 md:px-8 md:py-5 border border-white/20 text-white font-bold text-base md:text-lg tracking-widest hover:border-white/50 backdrop-blur-sm"
                             >
-                                VIEW SCHEDULE
+                                REGISTER NOW
                             </Link>
                         </motion.div>
                     </motion.div>

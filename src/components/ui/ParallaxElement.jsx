@@ -32,7 +32,7 @@ const ParallaxElement = ({
 
     return (
         <div ref={ref} className={className}>
-            <motion.div style={{ y: smoothY }}>
+            <motion.div style={{ y: smoothY }} className="h-full w-full">
                 {children}
             </motion.div>
         </div>

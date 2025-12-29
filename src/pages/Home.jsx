@@ -34,10 +34,10 @@ const Home = () => {
                         READY TO JOIN THE CORPS?
                     </h2>
                     <Link
-                        to="/register"
+                        to="/events"
                         className="inline-block px-10 py-4 bg-prakida-flame text-white font-bold text-xl tracking-widest hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 skew-x-[-12deg]"
                     >
-                        <span className="block skew-x-[12deg]">REGISTER NOW</span>
+                        <span className="block skew-x-[12deg]">VIEW SCHEDULE</span>
                     </Link>
                 </div>
             </section>

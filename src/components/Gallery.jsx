@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import ParallaxElement from './ui/ParallaxElement';
-
 import gallery1 from '../assets/gallery-1.jpg';
 import gallery2 from '../assets/gallery-2.jpg';
 import gallery3 from '../assets/gallery-3.jpg';
@@ -71,7 +70,7 @@ const Gallery = () => {
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-prakida-flame font-bold tracking-[0.2em] mb-4 text-sm md:text-base">ARCHIVES</h2>
-                    <h3 className="text-4xl md:text-5xl font-display font-bold text-white">HEROIC MOMENTS</h3>
+                    <h3 className="text-4xl md:text-5xl font-display font-bold text-white">PREVIOUS PRAKRIDA</h3>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent mx-auto mt-6"></div>
                 </div>
 

@@ -122,8 +122,8 @@ const Hero = () => {
                     animate="visible"
                 >
                     <motion.div variants={itemVariants} className="mb-4">
-                        <span className="px-4 py-1 border border-prakida-flame/50 text-prakida-flame text-[10px] md:text-sm font-bold tracking-widest md:tracking-[0.3em] uppercase backdrop-blur-sm inline-block">
-                            Inter-College Sports Fest 2026
+                        <span className="px-4 py-1 border border-prakida-flame/50 text-prakida-flame text-[16px] md:text-lg font-bold tracking-widest md:tracking-[0.3em] uppercase backdrop-blur-sm inline-block">
+                            BIT PATNA PRESENTS
                         </span>
                     </motion.div>
 
@@ -148,7 +148,7 @@ const Hero = () => {
                         transition={{ delay: 0.1 }}
                         className="text-gray-300 text-xl md:text-[26px] max-w-3xl mx-auto mt-8 mb-12 font-light tracking-wide leading-relaxed"
                     >
-                        The arena awaits. Unleash your inner <span className="text-prakida-water font-bold drop-shadow-glow">Hashira</span>.<br />
+                        The arena awaits. Unleash your inner <span className="text-prakida-water font-bold drop-shadow-glow">HASHIRA</span>.<br />
                         <span className="text-white/60 text-lg">Victory is not given. It is taken.</span>
                     </motion.p>
 

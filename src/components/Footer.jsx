@@ -12,24 +12,24 @@ const Footer = () => {
                             Forged in Sportsmanship, Inspired by Hashira. The ultimate inter-college sports festival.
                         </p>
                         <div className="flex justify-center md:justify-start gap-6">
-                            <a href="https://www.instagram.com/bitp_prakrida/" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-prakida-flame hover:text-white transition-all" target="_blank">
+                            <a href="https://www.instagram.com/bitp_prakrida/" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#E1306C] hover:text-white transition-all duration-300" target="_blank">
                                 <SiInstagram size={20} />
                             </a>
                         </div>
                     </div>
 
                     <div className="flex flex-col items-center md:items-start gap-3 text-base md:text-lg text-gray-400">
-                        <div className="flex items-center gap-3">
-                            <SiGooglemaps size={20} />
-                            <span>BIT Patna, Bihar, India</span>
+                        <div className="flex items-center gap-3 group cursor-default">
+                            <SiGooglemaps size={20} className="group-hover:text-[#34A853] transition-colors duration-300" />
+                            <span className="group-hover:text-white transition-colors duration-300">BIT Patna, Bihar, India</span>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <FaPhone size={20} />
-                            <span>Contact: 79035 55032</span>
+                        <div className="flex items-center gap-3 group cursor-pointer">
+                            <FaPhone size={20} className="group-hover:text-[#25D366] transition-colors duration-300" />
+                            <span className="group-hover:text-white transition-colors duration-300">Contact: 79035 55032</span>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <SiGmail size={20} />
-                            <a href="mailto:prakida@bitmesra.ac.in" className="hover:text-gray-400 transition-colors">prakrida@bitmesra.ac.in</a>
+                        <div className="flex items-center gap-3 group">
+                            <SiGmail size={20} className="group-hover:text-[#EA4335] transition-colors duration-300" />
+                            <a href="mailto:prakida@bitmesra.ac.in" className="group-hover:text-white transition-colors duration-300">prakrida@bitmesra.ac.in</a>
                         </div>
                     </div>
                 </div>

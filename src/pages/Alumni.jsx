@@ -79,7 +79,7 @@ const Alumni = () => {
             {/* Featured Sponsors Section */}
             <div className="mb-24">
                 <SectionTitle title="FEATURED SPONSORS" kanji="スポンサー" />
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                     {sponsors.map((sponsor, index) => (
                         <motion.div
@@ -88,12 +88,12 @@ const Alumni = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-lg hover:border-prakida-flame/50 transition-colors group"
+                            className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-prakida-flame/50 transition-colors group"
                         >
                             <div className="flex items-center gap-4 mb-4">
-                                <img 
-                                    src={sponsor.image} 
-                                    alt={sponsor.name} 
+                                <img
+                                    src={sponsor.image}
+                                    alt={sponsor.name}
                                     className="w-16 h-16 rounded-full border-2 border-prakida-flame"
                                 />
                                 <div>
@@ -121,10 +121,10 @@ const Alumni = () => {
             {/* Registration Section */}
             <div>
                 <SectionTitle title="ALUMNI REGISTRATION" kanji="登録" />
-                
-                <div className="mt-12 max-w-2xl mx-auto bg-black/40 backdrop-blur-md p-8 md:p-12 border border-white/10 rounded-xl relative overflow-hidden">
+
+                <div className="mt-12 max-w-2xl mx-auto bg-black/40 backdrop-blur-md p-8 md:p-12 border border-white/10 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-prakida-flame/10 blur-[100px] pointer-events-none rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                    
+
                     <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
@@ -137,7 +137,7 @@ const Alumni = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
                                         placeholder="John Doe"
                                     />
                                 </div>
@@ -151,7 +151,7 @@ const Alumni = () => {
                                         value={formData.batch}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-4 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/10 py-3 pl-4 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
                                         placeholder="2020"
                                     />
                                 </div>
@@ -168,7 +168,7 @@ const Alumni = () => {
                                     value={formData.role}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
+                                    className="w-full bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
                                     placeholder="Software Engineer @ Tech Corp"
                                 />
                             </div>
@@ -185,7 +185,7 @@ const Alumni = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
                                         placeholder="john@example.com"
                                     />
                                 </div>
@@ -199,7 +199,7 @@ const Alumni = () => {
                                         name="linkedin"
                                         value={formData.linkedin}
                                         onChange={handleChange}
-                                        className="w-full bg-white/5 border border-white/10 rounded-md py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600"
                                         placeholder="https://linkedin.com/in/..."
                                     />
                                 </div>
@@ -213,14 +213,14 @@ const Alumni = () => {
                                 value={formData.message}
                                 onChange={handleChange}
                                 rows="4"
-                                className="w-full bg-white/5 border border-white/10 rounded-md py-3 px-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600 resize-none"
+                                className="w-full bg-white/5 border border-white/10 py-3 px-4 text-white focus:outline-none focus:border-prakida-flame focus:bg-white/10 transition-all font-sans placeholder-gray-600 resize-none"
                                 placeholder="Any message for the juniors or organizers?"
                             ></textarea>
                         </div>
 
                         <button
                             type="submit"
-                            className="w-full bg-prakida-flame text-white font-bold py-4 rounded-md hover:bg-orange-600 transition-all flex items-center justify-center gap-2 group"
+                            className="w-full bg-prakida-flame text-white font-bold py-4 hover:bg-orange-600 transition-all flex items-center justify-center gap-2 group"
                         >
                             <span>REGISTER AS ALUMNI</span>
                             <Send size={18} className="group-hover:translate-x-1 transition-transform" />

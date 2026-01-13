@@ -131,6 +131,38 @@ const Registration = () => {
             }
         }
 
+        // 5. Duplicate Registration Check (Server-side via RPC)
+        setStatus({ type: 'info', message: 'Verifying eligibility...' });
+
+        const allEmails = [contactEmail || user.email, ...members.map(m => m.email)].map(e => e.trim().toLowerCase()).filter(Boolean);
+
+        try {
+            const { data: duplicates, error: duplicateError } = await supabase
+                .rpc('check_duplicates', {
+                    _emails: allEmails,
+                    _sport: selectedSport,
+                    _category: selectedCategory
+                });
+
+            if (duplicateError) {
+                console.error("Duplicate check error:", duplicateError);
+                throw duplicateError;
+            }
+
+            if (duplicates && duplicates.length > 0) {
+                setStatus({
+                    type: 'error',
+                    message: `Registration Failed: The following users are ALREADY registered for ${selectedSport} (${Object.values(SPORTS_CONFIG[selectedSport].categories).find(c => c.id === selectedCategory)?.label || selectedCategory}): ${duplicates.join(', ')}`
+                });
+                return;
+            }
+
+        } catch (err) {
+            console.error("Validation failed:", err);
+            setStatus({ type: 'error', message: "Validation check failed. Please try again." });
+            return;
+        }
+
         setIsSubmitting(true);
         setStatus({ type: '', message: '' });
 

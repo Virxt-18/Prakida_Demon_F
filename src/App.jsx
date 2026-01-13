@@ -47,21 +47,27 @@ const AnimatedRoutes = () => {
   );
 };
 
+import SmoothScroll from './components/ui/SmoothScroll';
+import CustomCursor from './components/ui/CustomCursor';
+
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <ScrollToTop />
-        <ScrollPath />
-        <div className="bg-prakida-bg min-h-screen text-white overflow-x-hidden selection:bg-prakida-flame selection:text-white">
-          <NoiseOverlay />
-          <Navbar />
-          <main>
-            <AnimatedRoutes />
-          </main>
-          <Footer />
-        </div>
-      </Router>
+      <SmoothScroll>
+        <CustomCursor />
+        <Router>
+          <ScrollToTop />
+          <ScrollPath />
+          <div className="bg-prakida-bg min-h-screen text-white overflow-x-hidden selection:bg-prakida-flame selection:text-white cursor-none"> {/* Added cursor-none */}
+            <NoiseOverlay />
+            <Navbar />
+            <main>
+              <AnimatedRoutes />
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </SmoothScroll>
     </AuthProvider>
   );
 }

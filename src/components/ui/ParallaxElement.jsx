@@ -26,13 +26,12 @@ const ParallaxElement = ({
     const smoothY = useSpring(y, scrollLagConfig);
 
     // Check if we should disable on mobile (simple check, could be more robust)
-    if (!enableMobile && typeof window !== 'undefined' && window.innerWidth < 768) {
-        return <div className={className}>{children}</div>;
-    }
+    // Check if we should disable on mobile (safe check)
+    const isMobile = !enableMobile && typeof window !== 'undefined' && window.innerWidth < 768;
 
     return (
         <div ref={ref} className={className}>
-            <motion.div style={{ y: smoothY }} className="h-full w-full">
+            <motion.div style={{ y: isMobile ? 0 : smoothY }} className="h-full w-full">
                 {children}
             </motion.div>
         </div>

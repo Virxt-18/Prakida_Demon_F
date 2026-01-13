@@ -21,6 +21,7 @@ const RegisterSection = lazy(() => import('./pages/RegisterSection'));
 const Alumni = lazy(() => import('./pages/Alumni'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 // Separate component to use hook inside Router
 const AnimatedRoutes = () => {
@@ -37,6 +38,7 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/register" element={<PageTransition><RegisterSection /></PageTransition>} />
           <Route path="/alumni" element={<PageTransition><Alumni /></PageTransition>} />
+          <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
           <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
         </Routes>

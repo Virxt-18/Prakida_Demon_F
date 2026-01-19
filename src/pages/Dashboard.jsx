@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../lib/supabase';
+// supabase import removed (refactored to service)
 import { sectionSlide } from '../utils/motion';
 import { User, Trophy, Calendar, Users, Shield } from 'lucide-react';
 
 const Dashboard = () => {
     const { user } = useAuth();
     const [registrations, setRegistrations] = useState([]);
+    const [tickets, setTickets] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,74 +18,17 @@ const Dashboard = () => {
             try {
                 console.log("Fetching dashboard data for:", user.email);
 
-                // 1. Fetch teams where user is a MEMBER (matching by email, case-insensitive)
-                const { data: memberData, error: memberError } = await supabase
-                    .from('team_members')
-                    .select(`
-                        id,
-                        role,
-                        registrations (
-                            id,
-                            team_name,
-                            sport,
-                            category,
-                            team_unique_id,
-                            created_at
-                        )
-                    `)
-                    .ilike('email', user.email); // Case-insensitive match
+                // REFACTOR: Use Service for complex registration fetching
+                const { registrationService } = await import('../services/api/registrations');
+                const finalData = await registrationService.getUserRegistrations(user);
 
-                if (memberError) {
-                    console.error("Member fetch error:", memberError);
-                }
-
-                // 2. Fetch teams CREATED by the user (as Captain)
-                // This acts as a fallback if the team_members entry has a typo or is missing
-                const { data: creatorData, error: creatorError } = await supabase
-                    .from('registrations')
-                    .select(`
-                        id,
-                        team_name,
-                        sport,
-                        category,
-                        team_unique_id,
-                        created_at
-                    `)
-                    .eq('user_id', user.id);
-
-                if (creatorError) {
-                    console.error("Creator fetch error:", creatorError);
-                }
-
-                // 3. Merge and Deduplicate
-                const formattedMemberData = (memberData || []).map(m => ({
-                    id: m.id, // member id
-                    role: m.role,
-                    ...m.registrations
-                })).filter(item => item.id); // filter out null registrations
-
-                const formattedCreatorData = (creatorData || []).map(r => ({
-                    id: r.id, // registration id (using as unique key proxy)
-                    role: 'Captain', // Creator is always Captain (or at least admin)
-                    ...r
-                }));
-
-                // Combine: Use a Map to deduplicate based on Registration ID (team_unique_id)
-                const combined = new Map();
-
-                formattedMemberData.forEach(item => {
-                    if (item.team_unique_id) combined.set(item.team_unique_id, item);
-                });
-
-                formattedCreatorData.forEach(item => {
-                    if (item.team_unique_id && !combined.has(item.team_unique_id)) {
-                        combined.set(item.team_unique_id, item);
-                    }
-                });
-
-                const finalData = Array.from(combined.values());
                 console.log("Final Dashboard Data:", finalData);
                 setRegistrations(finalData);
+
+                // --- Fetch Tickets (via Service) ---
+                const { ticketService } = await import('../services/api/tickets');
+                const ticketData = await ticketService.getUserTickets(user.id);
+                setTickets(ticketData);
 
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
@@ -94,6 +38,29 @@ const Dashboard = () => {
         };
 
         fetchRegistrations();
+
+        // Mock Payment Success Handler (TESTING ONLY)
+        const params = new URLSearchParams(window.location.search);
+        const isMockMode = import.meta.env.VITE_TIQR_MOCK_MODE !== 'false';
+
+        if (isMockMode && params.get('mock_payment_success') === 'true' && params.get('uid')) {
+            const uid = params.get('uid');
+            const confirmPayment = async () => {
+                const { paymentService } = await import('../services/paymentService');
+                const result = await paymentService.verifyMockPayment(uid);
+
+                if (result.success) {
+                    console.log("Payment Confirmed! Refreshing...");
+                    await fetchRegistrations();
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    alert("Payment Successful! Verification complete.");
+                } else {
+                    console.warn(result.message);
+                    alert("Payment Verification Failed: " + result.message);
+                }
+            };
+            confirmPayment();
+        }
     }, [user]);
 
     if (loading) {
@@ -103,6 +70,9 @@ const Dashboard = () => {
             </div>
         );
     }
+
+    // Helper to determine if we show Mock Payment Button
+    const showMockPay = import.meta.env.VITE_TIQR_MOCK_MODE !== 'false';
 
     return (
         <section className="min-h-screen bg-black pt-32 pb-20 px-4">
@@ -127,6 +97,61 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </motion.div>
+
+                {/* --- TICKETS SECTION --- */}
+                {tickets.length > 0 && (
+                    <div className="mb-12">
+                        <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-2">
+                            YOUR TICKETS
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {tickets.map(ticket => (
+                                <motion.div
+                                    key={ticket.id}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/30 p-6 rounded-sm relative overflow-hidden"
+                                >
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div>
+                                            <h3 className="text-2xl font-display font-bold text-white">STAR NIGHT</h3>
+                                            <p className="text-purple-400 text-sm font-mono tracking-widest">ADMIT ONE</p>
+                                        </div>
+                                        <div className={`px-2 py-1 rounded text-xs font-bold uppercase border ${ticket.payment_status === 'confirmed'
+                                            ? 'bg-green-900/30 text-green-400 border-green-500/30'
+                                            : 'bg-yellow-900/30 text-yellow-400 border-yellow-500/30'
+                                            }`}>
+                                            {ticket.payment_status}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-end border-t border-white/10 pt-4">
+                                        <div className="text-sm text-gray-400">
+                                            <p>Pass ID: <span className="text-white font-mono">{ticket.id.slice(0, 8)}</span></p>
+                                            <p>Price: <span className="text-white">₹{ticket.price}</span></p>
+                                        </div>
+                                        {ticket.payment_status === 'confirmed' ? (
+                                            <button className="bg-white text-black px-4 py-2 font-bold text-xs hover:bg-gray-200">
+                                                VIEW QR CODE
+                                            </button>
+                                        ) : (
+                                            showMockPay ? (
+                                                <button
+                                                    onClick={() => window.location.href = `/dashboard?mock_payment_success=true&uid=${ticket.tiqr_booking_uid}`}
+                                                    className="bg-prakida-flame text-white px-4 py-2 font-bold text-xs hover:bg-red-600"
+                                                >
+                                                    PAY NOW (MOCK)
+                                                </button>
+                                            ) : (
+                                                <span className="text-xs text-gray-500 font-mono">Payment Pending via TiQR</span>
+                                            )
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-2">
                     <Trophy className="text-prakida-flame" /> YOUR BATTLES
@@ -185,6 +210,53 @@ const Dashboard = () => {
                                             <Calendar size={16} className="text-gray-500" />
                                             <span className="text-gray-500 w-24 uppercase text-xs font-bold">Registered</span>
                                             <span>{new Date(reg.created_at).toLocaleDateString()}</span>
+                                        </div>
+
+                                        {/* Status & Actions */}
+                                        <div className="flex items-center gap-3 mt-4 pt-2 border-t border-white/5">
+                                            {reg.payment_status === 'confirmed' ? (
+                                                <a
+                                                    href={reg.ticket_pdf_url || '#'}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex-1 bg-green-900/40 text-green-400 border border-green-500/30 py-2 text-center text-xs font-bold hover:bg-green-800/50 transition-colors"
+                                                >
+                                                    DOWNLOAD TICKET
+                                                </a>
+                                            ) : (
+                                                showMockPay ? (
+                                                    <button
+                                                        onClick={async () => {
+                                                            let uid = reg.tiqr_booking_uid;
+
+                                                            // Self-healing: If UID is missing, generate and save one
+                                                            if (!uid) {
+                                                                console.log("Missing UID, generating new one...");
+                                                                uid = `mock_uid_healed_${Date.now()}`;
+
+                                                                const { error } = await supabase
+                                                                    .from('registrations')
+                                                                    .update({ tiqr_booking_uid: uid })
+                                                                    .eq('id', reg.id || reg.registration_id); // Handle different id fields depending on query
+
+                                                                if (error) {
+                                                                    console.error("Failed to heal UID:", error);
+                                                                    alert("Error initiating payment. Please contact support.");
+                                                                    return;
+                                                                }
+                                                            }
+
+                                                            // Proceed to mock payment success
+                                                            window.location.href = `/dashboard?mock_payment_success=true&uid=${uid}`;
+                                                        }}
+                                                        className="flex-1 bg-prakida-flame/80 text-white border border-transparent py-2 text-center text-xs font-bold hover:bg-prakida-flame transition-colors"
+                                                    >
+                                                        COMPLETE PAYMENT (MOCK)
+                                                    </button>
+                                                ) : (
+                                                    <span className="text-xs text-gray-500 font-mono w-full text-center block pt-2">Payment Pending via TiQR</span>
+                                                )
+                                            )}
                                         </div>
                                     </div>
                                 </div>

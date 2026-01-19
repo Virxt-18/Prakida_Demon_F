@@ -6,9 +6,11 @@ import GlitchLink from './ui/GlitchLink';
 import logo from '../assets/prakida-logo.png';
 import { buttonHover, buttonTap } from '../utils/motion';
 import { useAuth } from '../context/AuthContext';
+import { useAdmin } from '../hooks/useAdmin';
 
 const Navbar = () => {
     const { user, signOut } = useAuth();
+    const { isAdmin } = useAdmin();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
@@ -28,6 +30,7 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Home', kanji: 'ホーム', path: '/' },
+        { name: 'Star Night', kanji: 'スターナイト', path: '/tickets' },
         { name: 'Dashboard', kanji: 'ダッシュボード', path: '/dashboard' },
         { name: 'Events', kanji: 'イベント', path: '/events' },
         { name: 'Merchandise', kanji: 'グッズ', path: '/merchandise' },
@@ -57,6 +60,15 @@ const Navbar = () => {
                             kanji={link.kanji}
                         />
                     ))}
+
+                    {isAdmin && (
+                        <GlitchLink
+                            to="/admin"
+                            text="ADMIN"
+                            kanji="管理"
+                            className="text-red-500"
+                        />
+                    )}
 
                     {user ? (
                         <div className="flex items-center gap-4">

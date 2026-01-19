@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { supabase } from '../lib/supabase';
+// supabase import removed (refactored to service)
 import { SPORTS_CONFIG } from '../lib/sportsConfig';
 import { buttonHover, buttonTap, sectionSlide } from '../utils/motion';
 import { Plus, Trash2, Trophy, Users, Shield, Crown } from 'lucide-react';
@@ -111,14 +111,12 @@ const Registration = () => {
             return;
         }
 
-        // 4. Contact Validation (Phone mandatory for Captain/VC, Email mandatory for all)
-        // User (Registrant) validation
+        // 4. Contact Validation
         if (!contactEmail || !contactPhone) {
             setStatus({ type: 'error', message: "Your contact details are incomplete." });
             return;
         }
 
-        // Roster validation
         for (let i = 0; i < members.length; i++) {
             const m = members[i];
             if (!m.email) {
@@ -131,23 +129,16 @@ const Registration = () => {
             }
         }
 
-        // 5. Duplicate Registration Check (Server-side via RPC)
+        // 5. Duplicate Registration Check (via Service)
         setStatus({ type: 'info', message: 'Verifying eligibility...' });
 
         const allEmails = [contactEmail || user.email, ...members.map(m => m.email)].map(e => e.trim().toLowerCase()).filter(Boolean);
 
         try {
-            const { data: duplicates, error: duplicateError } = await supabase
-                .rpc('check_duplicates', {
-                    _emails: allEmails,
-                    _sport: selectedSport,
-                    _category: selectedCategory
-                });
+            // REFACTOR: Use Service
+            const { registrationService } = await import('../services/api/registrations');
 
-            if (duplicateError) {
-                console.error("Duplicate check error:", duplicateError);
-                throw duplicateError;
-            }
+            const duplicates = await registrationService.checkDuplicates(allEmails, selectedSport, selectedCategory);
 
             if (duplicates && duplicates.length > 0) {
                 setStatus({
@@ -172,26 +163,23 @@ const Registration = () => {
         const teamUniqueId = `${sanitizedName}@${randomCode}`;
 
         try {
-            // 1. Create Registration
-            const { data: regData, error: regError } = await supabase
-                .from('registrations')
-                .insert({
-                    user_id: user.id,
-                    sport: selectedSport,
-                    category: selectedCategory,
-                    team_name: teamName || user.user_metadata?.full_name || 'Individual',
-                    college: college,
-                    contact_email: contactEmail || user.email,
-                    contact_phone: contactPhone,
-                    team_unique_id: teamUniqueId
-                })
-                .select()
-                .single();
+            const { registrationService } = await import('../services/api/registrations');
+            const { paymentService } = await import('../services/paymentService');
 
-            if (regError) throw regError;
+            // 1. Create Registration (Pending Payment)
+            const regData = await registrationService.createRegistration({
+                user_id: user.id,
+                sport: selectedSport,
+                category: selectedCategory,
+                team_name: teamName || user.user_metadata?.full_name || 'Individual',
+                college: college,
+                contact_email: contactEmail || user.email,
+                contact_phone: contactPhone,
+                team_unique_id: teamUniqueId,
+                payment_status: 'pending'
+            });
 
             // 2. Add Team Members
-            // First, add the User (Registrant)
             const userEntry = {
                 registration_id: regData.id,
                 name: user.user_metadata?.full_name || 'Registrant',
@@ -205,25 +193,36 @@ const Registration = () => {
                 name: m.name,
                 role: m.role,
                 email: m.email,
-                contact_info: m.contact // Can be empty if role is Player
+                contact_info: m.contact
             }));
 
-            const { error: membersError } = await supabase
-                .from('team_members')
-                .insert([userEntry, ...rosterEntries]);
+            await registrationService.addTeamMembers([userEntry, ...rosterEntries]);
 
-            if (membersError) throw membersError;
+            // 3. Initiate TiQR Payment
+            setStatus({ type: 'info', message: 'Initiating Payment Gateway...' });
 
-            setStatus({ type: 'success', message: 'Registration Successful! The corps awaits your arrival.' });
-            setMembers([]);
-            setTeamName('');
-            setCollege('');
-            setContactPhone('');
+            const bookingResponse = await paymentService.initiatePayment({
+                customer_name: user.user_metadata?.full_name || 'Registrant',
+                customer_email: contactEmail || user.email,
+                customer_phone: contactPhone,
+                amount: 100, // Placeholder
+                meta_data: {
+                    registration_id: regData.id,
+                    team_unique_id: teamUniqueId
+                }
+            });
+
+            // Update registration with TiQR UID
+            await registrationService.updateBookingUid(regData.id, bookingResponse.booking_uid);
+
+            setStatus({ type: 'success', message: 'Redirecting to Payment...' });
+
+            // Redirect to Payment URL
+            window.location.href = bookingResponse.payment_url;
 
         } catch (error) {
             console.error('Registration Error:', error);
             setStatus({ type: 'error', message: error.message || 'Failed to register. Please try again.' });
-        } finally {
             setIsSubmitting(false);
         }
     };

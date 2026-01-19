@@ -23,7 +23,7 @@ const Hero = () => {
 
     useEffect(() => {
         // Set target date to January 13, 2026
-        const targetDate = new Date('2026-01-13T09:00:00');
+        const targetDate = new Date('2026-03-13T09:00:00');
 
         const interval = setInterval(() => {
             const now = new Date();
@@ -109,7 +109,7 @@ const Hero = () => {
                         <ParallaxElement speed={0.5} direction="down">
                             <motion.div variants={heroPunchIn} initial="hidden" animate="visible">
                                 <h1
-                                    className="text-5xl md:text-9xl lg:text-[12rem] font-display font-black text-white tracking-tighter leading-[0.8]"
+                                    className="text-5xl md:text-9xl lg:text-[10rem] font-display font-black text-white tracking-tighter leading-[0.8]"
                                     style={{ textShadow: '0 0 40px rgba(255,255,255,0.1)', fontFamily: "'Nosifer', cursive" }}
                                 >
                                     PRAKRIDA

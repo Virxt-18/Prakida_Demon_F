@@ -1,4 +1,4 @@
-uuimport { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Instagram, Twitter } from "lucide-react";
 
 const Contact = () => {

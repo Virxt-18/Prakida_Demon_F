@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Instagram, Twitter } from "lucide-react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: '' }
+  const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    if (user?.email) {
+      setFormData((prev) => ({ ...prev, email: user.email }));
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,12 +29,24 @@ const Contact = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setStatus({
+        type: "error",
+        message: "You must be logged in to send a message.",
+      });
+      return;
+    }
+
     setLoading(true);
     setStatus(null);
 
-    const { name, email, message } = formData;
+    const { name, email, phone, message } = formData;
     if (!name || !email || !message) {
-      setStatus({ type: "error", message: "Please fill in all fields." });
+      setStatus({
+        type: "error",
+        message: "Please fill in all required fields.",
+      });
       setLoading(false);
       return;
     }
@@ -33,11 +55,13 @@ const Contact = () => {
       await addDoc(collection(db, "Contact_us"), {
         name,
         email,
+        phone: phone || "",
         message,
+        user_id: user.uid, // Linking to user
         created_at: new Date().toISOString(),
       });
       setStatus({ type: "success", message: "Message sent successfully!" });
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: user.email, phone: "", message: "" });
     } catch (error) {
       console.error("Error sending message:", error);
       setStatus({
@@ -178,73 +202,109 @@ const Contact = () => {
         </div>
 
         {}
-        <motion.form
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="space-y-6 bg-gray-900/50 p-8 border border-gray-800"
-          onSubmit={handleSendMessage}
-        >
-          {status && (
-            <div
-              className={`p-4 rounded border ${
-                status.type === "success"
-                  ? "bg-green-900/20 border-green-500/50 text-green-400"
-                  : "bg-red-900/20 border-red-500/50 text-red-400"
-              }`}
-            >
-              {status.message}
+        {!user ? (
+          <div className="bg-white/5 border border-white/10 p-8 text-center backdrop-blur-sm">
+            <h3 className="text-2xl font-display font-bold text-white mb-4">
+              LOGIN REQUIRED
+            </h3>
+            <p className="text-gray-400 mb-6">
+              You must be logged in to send a message to the council.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Link
+                to="/login"
+                className="px-6 py-2 bg-prakida-flame text-white font-bold hover:bg-prakida-flameDark transition-colors"
+              >
+                LOGIN
+              </Link>
+              <Link
+                to="/signup"
+                className="px-6 py-2 border border-white/20 text-white font-bold hover:bg-white/10 transition-colors"
+              >
+                SIGN UP
+              </Link>
             </div>
-          )}
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
-              placeholder="Your Name"
-              required
-            />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
-              placeholder="your@email.com"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Message
-            </label>
-            <textarea
-              name="message"
-              rows="4"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
-              placeholder="Your message..."
-              required
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-prakida-flame hover:bg-orange-600 text-white font-bold py-4 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+        ) : (
+          <motion.form
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-6 bg-gray-900/50 p-8 border border-gray-800"
+            onSubmit={handleSendMessage}
           >
-            {loading ? "Sending..." : "Send Message"}
-          </button>
-        </motion.form>
+            {status && (
+              <div
+                className={`p-4 rounded border ${
+                  status.type === "success"
+                    ? "bg-green-900/20 border-green-500/50 text-green-400"
+                    : "bg-red-900/20 border-red-500/50 text-red-400"
+                }`}
+              >
+                {status.message}
+              </div>
+            )}
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
+                Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
+                Email <span className="text-gray-500">(Auto-filled)</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                disabled
+                className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-gray-400 cursor-not-allowed focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
+                Phone Number <span className="text-gray-500">(Optional)</span>
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
+                placeholder="+91..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">
+                Message <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                name="message"
+                rows="4"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full bg-black/50 border border-gray-700 px-4 py-3 text-white focus:border-prakida-flame focus:outline-none transition-colors"
+                placeholder="Your message..."
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-prakida-flame hover:bg-orange-600 text-white font-bold py-4 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+          </motion.form>
+        )}
       </div>
     </div>
   );

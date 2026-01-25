@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-  }
+  html {}
 
   body {
     @apply bg-prakida-bg text-prakida-text font-sans overflow-x-hidden;

@@ -18,12 +18,12 @@ const Sponsors = () => {
       </div>
 
       <div className="relative flex overflow-x-hidden group">
-        {}
+        { }
         <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
         <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
 
         <div className="animate-marquee whitespace-nowrap flex gap-16 py-4">
-          {}
+          { }
           {[...sponsors, ...sponsors].map((sponsor, idx) => (
             <div
               key={idx}

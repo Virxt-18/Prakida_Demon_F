@@ -79,7 +79,7 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 perspective-1000">
-      {}
+      { }
       <div className="absolute inset-0 z-0 bg-black">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -98,7 +98,7 @@ const Hero = () => {
           </motion.div>
         </AnimatePresence>
 
-        {}
+        { }
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-prakida-bg z-10" />
         <div className="absolute inset-0 z-10 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay" />
       </div>
@@ -181,7 +181,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {}
+          { }
           <motion.div
             variants={itemVariants}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12 max-w-4xl mx-auto border-t border-white/20 pt-10"

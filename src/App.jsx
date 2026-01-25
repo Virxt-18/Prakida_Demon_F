@@ -157,7 +157,7 @@ function App() {
           <ScrollPath />
           <div className="bg-prakida-bg min-h-screen text-white overflow-x-hidden selection:bg-prakida-flame selection:text-white cursor-none">
             {" "}
-            {}
+            { }
             <NoiseOverlay />
             <Navbar />
             <main>

@@ -155,12 +155,12 @@ const TiltCard = ({ item, index }) => {
       }}
       className={`group relative h-[400px] border border-white/10 bg-white/5 rounded-sm overflow-hidden`}
     >
-      {}
+      { }
       <div
         className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
       ></div>
 
-      {}
+      { }
       <motion.div
         style={{
           opacity: useTransform(x, [-0.5, 0, 0.5], [0, 0.3, 0]),
@@ -171,7 +171,7 @@ const TiltCard = ({ item, index }) => {
         className="absolute inset-0 w-full h-full z-20 pointer-events-none"
       />
 
-      {}
+      { }
       <div
         className="absolute -bottom-10 -right-10 text-9xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-500 select-none font-display"
         style={{ transform: "translateZ(20px)" }}
@@ -183,7 +183,7 @@ const TiltCard = ({ item, index }) => {
         className="p-8 h-full flex flex-col relative z-10"
         style={{ transform: "translateZ(50px)" }}
       >
-        {}
+        { }
         <div className="flex justify-between items-start mb-6">
           <div>
             <h4 className="text-prakida-text/60 text-sm font-bold tracking-wider mb-1 uppercase">
@@ -198,7 +198,7 @@ const TiltCard = ({ item, index }) => {
           ></div>
         </div>
 
-        {}
+        { }
         <p className="text-gray-400 mb-8 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
           {item.desc}
         </p>
@@ -220,7 +220,7 @@ const TiltCard = ({ item, index }) => {
         </div>
       </div>
 
-      {}
+      { }
       <div
         className={`absolute inset-0 border-2 ${item.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
       ></div>

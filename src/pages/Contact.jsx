@@ -82,7 +82,7 @@ const Contact = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-6xl mx-auto">
         <div className="bg-white/5 border border-white/10 p-6 backdrop-blur-sm hover:bg-white/10 transition-colors group text-center">
           <div className="w-24 h-24 rounded-full bg-white/10 mx-auto mb-4 overflow-hidden border-2 border-prakida-flame/20 group-hover:border-prakida-flame transition-colors">
-            {}
+            { }
             <div className="w-full h-full flex items-center justify-center text-gray-500">
               <svg
                 className="w-12 h-12"
@@ -101,12 +101,12 @@ const Contact = () => {
             href="tel:+91XXXXXXXXXX"
             className="text-gray-400 group-hover:text-white transition-colors block"
           >
-            +91 XXXXX XXXXX
+            +91 79035 55032
           </a>
         </div>
         <div className="bg-white/5 border border-white/10 p-6 backdrop-blur-sm hover:bg-white/10 transition-colors group text-center">
           <div className="w-24 h-24 rounded-full bg-white/10 mx-auto mb-4 overflow-hidden border-2 border-prakida-flame/20 group-hover:border-prakida-flame transition-colors">
-            {}
+            { }
             <div className="w-full h-full flex items-center justify-center text-gray-500">
               <svg
                 className="w-12 h-12"
@@ -125,12 +125,12 @@ const Contact = () => {
             href="tel:+91XXXXXXXXXX"
             className="text-gray-400 group-hover:text-white transition-colors block"
           >
-            +91 XXXXX XXXXX
+            +91 84093 06029
           </a>
         </div>
         <div className="bg-white/5 border border-white/10 p-6 backdrop-blur-sm hover:bg-white/10 transition-colors group text-center">
           <div className="w-24 h-24 rounded-full bg-white/10 mx-auto mb-4 overflow-hidden border-2 border-prakida-flame/20 group-hover:border-prakida-flame transition-colors">
-            {}
+            { }
             <div className="w-full h-full flex items-center justify-center text-gray-500">
               <svg
                 className="w-12 h-12"
@@ -149,13 +149,13 @@ const Contact = () => {
             href="tel:+91XXXXXXXXXX"
             className="text-gray-400 group-hover:text-white transition-colors block"
           >
-            +91 XXXXX XXXXX
+            +91 79 7986 5972
           </a>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        {}
+        { }
         <div className="space-y-8">
           <h2 className="text-3xl font-bold text-white mb-6">Get in Touch</h2>
 
@@ -201,7 +201,7 @@ const Contact = () => {
           </div>
         </div>
 
-        {}
+        { }
         {!user ? (
           <div className="bg-white/5 border border-white/10 p-8 text-center backdrop-blur-sm">
             <h3 className="text-2xl font-display font-bold text-white mb-4">
@@ -234,11 +234,10 @@ const Contact = () => {
           >
             {status && (
               <div
-                className={`p-4 rounded border ${
-                  status.type === "success"
-                    ? "bg-green-900/20 border-green-500/50 text-green-400"
-                    : "bg-red-900/20 border-red-500/50 text-red-400"
-                }`}
+                className={`p-4 rounded border ${status.type === "success"
+                  ? "bg-green-900/20 border-green-500/50 text-green-400"
+                  : "bg-red-900/20 border-red-500/50 text-red-400"
+                  }`}
               >
                 {status.message}
               </div>

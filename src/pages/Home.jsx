@@ -23,11 +23,11 @@ const Home = () => {
         speed={30}
       />
       <About />
-      {}
+      { }
       <HashiraShowcase limit={3} />
       <Gallery />
 
-      {}
+      { }
       <section className="py-24 bg-prakida-bg relative overflow-hidden">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">

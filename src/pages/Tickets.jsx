@@ -93,7 +93,7 @@ const Tickets = () => {
                   OFFICIAL EVENT
                 </span>
                 <h2 className="text-4xl md:text-6xl font-display font-bold text-white leading-none">
-                  PRO                        
+                  PRO
                   <br />
                   NIGHT
                 </h2>
@@ -170,7 +170,7 @@ const Tickets = () => {
                     ? "PROCESSING..."
                     : user
                       ? "BUY TICKET"
-                      : "LOGIN TO BUY"}
+                      : "LOGIN FOR DELEGATES REGISTRATION"}
                 </span>
               </motion.button>
             </div>

@@ -85,7 +85,7 @@ const SPORTS_DATA = [
     detailedDesc: "Coordination is the ultimate weapon on the volleyball court. Every set, every dig, and every spike is a testament to the team's synchronicity. Experience the power of the 'Thunder Spike' as teams battle it out in a series of intense sets to reach the finals.",
     color: "from-yellow-500 to-amber-800",
     rulebook: "#",
-    images: [img3, img4, img5],
+    images: ["/volley01.jpg", "/volley02.jpg", "/volley03.jpg.jpeg"],
   },
   {
     id: "chess",

@@ -12,7 +12,7 @@ const SportDetailsModal = ({ sport, onClose }) => {
 
         const interval = setInterval(() => {
             setCurrentThumb((prev) => (prev + 1) % sport.images.length);
-        }, 4000);
+        }, 2500);
 
         return () => clearInterval(interval);
     }, [sport]);

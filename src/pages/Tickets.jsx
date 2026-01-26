@@ -12,12 +12,12 @@ const Tickets = () => {
   const [loading, setLoading] = useState(false);
 
   const EVENT_DETAILS = {
-    title: "STAR NIGHT 2026",
+    title: "PRO NIGHT 2026",
     artist: "THE MYSTERY HEADLINER",
-    date: "Feb 14, 2026",
+    date: "March 15, 2026",
     time: "19:00 Onwards",
     venue: "Main Arena, BIT Mesra",
-    price: 499.0,
+    price: 699.0,
   };
 
   const handlePurchase = async () => {
@@ -34,7 +34,7 @@ const Tickets = () => {
       const ticket = await ticketService.createTicket({
         user_id: user.id,
         user_email: user.email,
-        ticket_type: "star_night_pass",
+        ticket_type: "pro_night_pass",
         price: EVENT_DETAILS.price,
         payment_status: "pending",
       });
@@ -42,10 +42,10 @@ const Tickets = () => {
       const bookingResponse = await paymentService.initiatePayment({
         amount: EVENT_DETAILS.price,
         currency: "INR",
-        description: `Star Night Pass - ${user.email}`,
+        description: `Pro Night Pass - ${user.email}`,
         meta_data: {
           ticket_id: ticket.id,
-          type: "star_night_pass",
+          type: "pro_night_pass",
         },
       });
 
@@ -64,7 +64,7 @@ const Tickets = () => {
 
   return (
     <section className="min-h-screen bg-black pt-24 pb-20 relative overflow-hidden">
-      {}
+      { }
       <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] animate-pulse-slow"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-prakida-flame rounded-full filter blur-[128px] animate-pulse-slow animation-delay-2000"></div>
@@ -77,7 +77,7 @@ const Tickets = () => {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         >
-          {}
+          { }
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-prakida-flame rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <div className="relative bg-black border border-white/10 rounded-lg p-8 aspect-[4/5] flex flex-col justify-between overflow-hidden">
@@ -93,7 +93,7 @@ const Tickets = () => {
                   OFFICIAL EVENT
                 </span>
                 <h2 className="text-4xl md:text-6xl font-display font-bold text-white leading-none">
-                  STAR
+                  PRO                        
                   <br />
                   NIGHT
                 </h2>
@@ -116,7 +116,7 @@ const Tickets = () => {
             </div>
           </div>
 
-          {}
+          { }
           <div className="space-y-8">
             <div>
               <h1 className="text-3xl font-display text-white mb-2 flex items-center gap-3">

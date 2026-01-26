@@ -18,19 +18,19 @@ const About = () => {
       id="about"
       className="py-24 bg-prakida-bg relative overflow-hidden"
     >
-      {}
+      { }
       <motion.div
         style={{
-          x: useTransform(useScroll().scrollYProgress, [0, 1], [0, -200]),
+          x: useTransform(useScroll().scrollYProgress, [0, 1], [0, -300]),
         }}
-        className="absolute top-10 left-0 text-[10rem] md:text-[15rem] font-black text-white/5 opacity-50 select-none pointer-events-none whitespace-nowrap z-0"
+        className="absolute top-10 left-0 text-[10rem] md:text-[15rem] font-black text-white/5 opacity-70 select-none pointer-events-none whitespace-nowrap z-0"
       >
         P R A K I D A
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {}
+          { }
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -60,7 +60,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          {}
+          { }
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {pillars.map((pillar, idx) => (
               <motion.div

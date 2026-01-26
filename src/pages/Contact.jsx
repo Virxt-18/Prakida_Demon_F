@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Instagram, Twitter } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useAuth } from "../context/AuthContext";

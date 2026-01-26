@@ -30,7 +30,7 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Home', kanji: 'ホーム', path: '/' },
-        { name: 'Star Night', kanji: 'スターナイト', path: '/tickets' },
+        { name: 'Pro Night', kanji: 'プロナイト', path: '/tickets' },
         { name: 'Dashboard', kanji: 'ダッシュボード', path: '/dashboard' },
         { name: 'Events', kanji: 'イベント', path: '/events' },
         { name: 'Merchandise', kanji: 'グッズ', path: '/merchandise' },

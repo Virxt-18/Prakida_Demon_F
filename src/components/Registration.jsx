@@ -142,7 +142,7 @@ const Registration = () => {
     if (members.length < maxAdditional) {
       setMembers([
         ...members,
-        { name: "", role: "Player", email: "", contact: "" },
+        { name: "", role: "Player", gender: gender || "", email: "", contact: "" },
       ]);
     }
   };
@@ -267,6 +267,14 @@ const Registration = () => {
         return;
       }
 
+      if (!m.gender) {
+        setStatus({
+          type: "error",
+          message: `Player #${i + 2} (${m.name || "Unknown"}) is missing a gender.`,
+        });
+        return;
+      }
+
       if (registrationType === "group") {
         if (!m.name) {
           setStatus({
@@ -305,6 +313,8 @@ const Registration = () => {
         name: registrantName.trim(),
         email: contactEmail || user?.email || "",
         phone: contactPhone,
+        role: leadershipEnabled ? userRole : "Player",
+        gender,
       };
 
       const memberPayload =
@@ -315,6 +325,8 @@ const Registration = () => {
                 name: m.name,
                 email: m.email,
                 phone: m.contact,
+                role: leadershipEnabled ? (m.role || "Player") : "Player",
+                gender: m.gender,
               })),
             ]
           : [primaryMember];
@@ -330,7 +342,7 @@ const Registration = () => {
         members: memberPayload,
         role: leadershipEnabled ? userRole : "Player",
         gender,
-        teamName: leadershipEnabled ? teamName : " ",
+        teamName: leadershipEnabled ? teamName : undefined,
       });
 
       setStatus({ type: "success", message: "Redirecting to payment..." });
@@ -348,9 +360,18 @@ const Registration = () => {
       }
     } catch (error) {
       console.error("Registration Error:", error);
+
+      const backendMessage =
+        error?.payload?.message ||
+        error?.payload?.error ||
+        error?.payload?.raw ||
+        "";
+
       setStatus({
         type: "error",
-        message: error?.message || "Failed to register. Please try again.",
+        message:
+          [error?.message, backendMessage].filter(Boolean).join(" — ") ||
+          "Failed to register. Please try again.",
       });
       submitLockRef.current = false;
       setIsSubmitting(false);
@@ -571,7 +592,17 @@ const Registration = () => {
                   </label>
                   <select
                     value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    onChange={(e) => {
+                      const nextGender = e.target.value;
+                      setGender(nextGender);
+                      // If members don't have a gender chosen yet, default them to the selected team gender.
+                      setMembers((prev) =>
+                        prev.map((m) => ({
+                          ...m,
+                          gender: m.gender || nextGender,
+                        })),
+                      );
+                    }}
                     className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-prakida-flame transition-colors"
                     required
                   >
@@ -721,7 +752,7 @@ const Registration = () => {
                       {(index + 2).toString().padStart(2, "0")}
                     </span>
 
-                    <div className="flex-1 w-full md:w-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="flex-1 w-full md:w-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                       <input
                         type="text"
                         value={member.name}
@@ -755,6 +786,26 @@ const Registration = () => {
                           PLAYER
                         </div>
                       )}
+
+                      <select
+                        value={member.gender || ""}
+                        onChange={(e) =>
+                          handleMemberChange(index, "gender", e.target.value)
+                        }
+                        className="bg-black/30 border border-white/10 p-2 text-white text-sm focus:border-prakida-flame focus:outline-none w-full"
+                        required
+                      >
+                        <option value="" className="bg-gray-900">
+                          GENDER (REQ)
+                        </option>
+                        <option value="Male" className="bg-gray-900">
+                          Male
+                        </option>
+                        <option value="Female" className="bg-gray-900">
+                          Female
+                        </option>
+                      </select>
+
                       <input
                         type="email"
                         value={member.email}

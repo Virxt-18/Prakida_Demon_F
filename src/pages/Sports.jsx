@@ -175,19 +175,25 @@ const getPlayersLabelForSportCard = (sport) => {
 
   if (!scoped.length) return sport?.players || "";
 
-  const mins = scoped.map((c) => Number(c.minPlayers)).filter((n) => Number.isFinite(n));
-  const maxs = scoped.map((c) => Number(c.maxPlayers)).filter((n) => Number.isFinite(n));
-  if (!mins.length || !maxs.length) return sport?.players || "";
+  const ranges = scoped
+    .map((c) => {
+      const min = Number(c?.minPlayers);
+      const max = Number(c?.maxPlayers);
+      if (!Number.isFinite(min) || !Number.isFinite(max)) return null;
+      if (min === max) return `${min}`;
+      return `${min}-${max}`;
+    })
+    .filter(Boolean);
 
-  const minPlayers = Math.min(...mins);
-  const maxPlayers = Math.max(...maxs);
-  const range =
-    minPlayers === maxPlayers
-      ? `${minPlayers} Players`
-      : `${minPlayers}-${maxPlayers} Players`;
+  const uniqueRanges = Array.from(new Set(ranges));
+  if (!uniqueRanges.length) return sport?.players || "";
 
   const perHead = scoped.some((c) => c?.feeUnit === "per_head");
-  return perHead ? `${range} (Per Head)` : range;
+  const suffix = perHead ? " (Per Head)" : "";
+
+  if (uniqueRanges.length === 1) return `${uniqueRanges[0]} Players${suffix}`;
+  if (uniqueRanges.length <= 3) return `${uniqueRanges.join(" / ")} Players${suffix}`;
+  return `Varies by category${suffix}`;
 };
 
 const getCategoriesForSportCard = (sport) => {

@@ -27,6 +27,14 @@ const safeParseJson = async (response) => {
   }
 };
 
+const normalizeGender = (value) => {
+  if (!value) return "";
+  const v = String(value).trim().toLowerCase();
+  if (v === "m" || v === "male") return "M";
+  if (v === "f" || v === "female") return "F";
+  return String(value).trim();
+};
+
 const apiFetch = async (path, { method = "GET", body } = {}) => {
   const token = await getFirebaseIdToken();
   const url = `${API_BASE_URL}${path}`;
@@ -58,16 +66,47 @@ const apiFetch = async (path, { method = "GET", body } = {}) => {
 
 export const eventsService = {
   async bookEvent({ eventId, type, members, name, phone, college, role, gender, teamName }) {
+    const normalizedGender = normalizeGender(gender);
+    if (normalizedGender && normalizedGender !== "M" && normalizedGender !== "F") {
+      throw new ApiError("Gender must be M or F.", {
+        status: 400,
+        payload: { gender },
+      });
+    }
+
+    const cleanedTeamName =
+      typeof teamName === "string" ? teamName.trim() : teamName;
+
+    const normalizedMembers = (members || []).map((m) => {
+      const member = m && typeof m === "object" ? m : {};
+      const memberGender = normalizeGender(member.gender || normalizedGender);
+      return {
+        ...member,
+        role: member.role || role || "Player",
+        gender: memberGender,
+      };
+    });
+
+    const missingGenderIndex = normalizedMembers.findIndex(
+      (m) => !m?.gender || (m.gender !== "M" && m.gender !== "F"),
+    );
+    if (missingGenderIndex !== -1) {
+      throw new ApiError(`Member #${missingGenderIndex + 1} gender must be M or F.`, {
+        status: 400,
+        payload: { member: normalizedMembers[missingGenderIndex] },
+      });
+    }
+
     const body = {
       eventId,
       type,
-      role,
-      gender,
-      teamName,
+      members: normalizedMembers,
       name,
       phone,
       college,
-      ...(type === "group" ? { members: members || [] } : {}),
+      role,
+      gender: normalizedGender,
+      ...(cleanedTeamName ? { teamName: cleanedTeamName } : {}),
     };
 
     return await apiFetch(`/events/book`, { method: "POST", body });

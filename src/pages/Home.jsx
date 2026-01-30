@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import HashiraShowcase from "../components/HashiraShowcase";
 import Gallery from "../components/Gallery";
+import Sponsors from "../components/Sponsors";
 import Marquee from "../components/ui/Marquee";
 import { Link } from "react-router-dom";
 

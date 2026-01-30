@@ -4,22 +4,40 @@ export default function MemberSelector({
   members,
   selectedMembers,
   setSelectedMembers,
+  getMemberKey,
+  getMemberMeta,
 }) {
-  const toggleMember = (email) => {
+  const resolveKey = (member, index) => {
+    if (typeof getMemberKey === "function") {
+      const key = getMemberKey(member, index);
+      if (key != null && String(key).trim() !== "") return String(key);
+    }
+
+    const email = String(member?.email || "").trim();
+    const name = String(member?.name || "").trim();
+    const phone = String(member?.phone || member?.phone_number || "").trim();
+
+    // Many members can share the same email (captain's email), so include index.
+    return `${index}::${email}::${name}::${phone}`;
+  };
+
+  const toggleMember = (key) => {
     setSelectedMembers((prev) =>
-      prev.includes(email) ? prev.filter((e) => e !== email) : [...prev, email],
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
     );
   };
 
   return (
     <div className="space-y-3">
-      {members.map((member) => {
-        const isSelected = selectedMembers.includes(member.email);
+      {members.map((member, index) => {
+        const key = resolveKey(member, index);
+        const isSelected = selectedMembers.includes(key);
+        const meta = typeof getMemberMeta === "function" ? getMemberMeta(member, index) : null;
 
         return (
           <div
-            key={member.email}
-            onClick={() => toggleMember(member.email)}
+            key={key}
+            onClick={() => toggleMember(key)}
             className={`
               flex items-center justify-between p-4
               border cursor-pointer transition
@@ -34,6 +52,11 @@ export default function MemberSelector({
             <div>
               <p className="text-white font-medium">{member.name}</p>
               <p className="text-sm text-gray-400">{member.email}</p>
+              {meta ? (
+                <p className="text-[11px] text-gray-500 mt-1 leading-snug">
+                  {meta}
+                </p>
+              ) : null}
             </div>
 
             {/* RIGHT: CHECKBOX */}

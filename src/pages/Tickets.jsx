@@ -16,7 +16,7 @@ const Tickets = () => {
     artist: "THE MYSTERY HEADLINER",
     date: "March 15, 2026",
     time: "19:00 Onwards",
-    venue: "Main Arena, BIT Mesra",
+    venue: "Main Arena, BIT Mesra, Patna Campus",
     price: 699.0,
   };
 

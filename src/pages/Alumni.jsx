@@ -430,7 +430,7 @@ const Alumni = () => {
                 className="w-full bg-prakida-flame text-white font-bold py-4 hover:bg-orange-600 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <CreditCard size={18} />
-                {status === "SUBMITTING" ? "PROCESSING…" : "PAY ₹1600"}
+                {status === "SUBMITTING" ? "PROCESSING…" : "PAY ₹1599 & REGISTER"}
               </button>
 
               <button

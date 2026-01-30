@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import { sectionSlide, buttonHover, buttonTap } from "../utils/motion";
-import { Ticket, Music, Calendar, MapPin, Zap, Star } from "lucide-react";
+import { Ticket, Music, Calendar, MapPin, Zap, Star, X } from "lucide-react";
 
 const Tickets = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [noticeOpen, setNoticeOpen] = useState(false);
+
+  // Toggle this when ticket sales open.
+  const REGISTRATION_OPEN = false;
 
   const EVENT_DETAILS = {
     title: "PRO NIGHT 2026",
@@ -21,6 +26,11 @@ const Tickets = () => {
   };
 
   const handlePurchase = async () => {
+    if (!REGISTRATION_OPEN) {
+      setNoticeOpen(true);
+      return;
+    }
+
     if (!user) {
       navigate("/login?redirect=/tickets");
       return;
@@ -62,8 +72,75 @@ const Tickets = () => {
     }
   };
 
+  useEffect(() => {
+    if (!noticeOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setNoticeOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [noticeOpen]);
+
   return (
     <section className="min-h-screen bg-black pt-24 pb-20 relative overflow-hidden">
+      {noticeOpen ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Ticket sales notice"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setNoticeOpen(false);
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="relative w-full max-w-md bg-black border border-white/15 rounded-lg p-6"
+          >
+            <button
+              type="button"
+              onClick={() => setNoticeOpen(false)}
+              className="absolute top-3 right-3 p-2 text-gray-300 hover:text-white"
+              aria-label="Close"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="flex items-start gap-3">
+              <div className="mt-1 text-prakida-flame">
+                <Ticket size={20} />
+              </div>
+              <div>
+                <h3 className="text-white font-bold text-lg">
+                  Registration not started
+                </h3>
+                <p className="text-gray-400 text-sm mt-2 leading-relaxed">
+                  Pro-Nite ticket sales will open soon. Please check back later
+                  for the registration link and payment.
+                </p>
+                <div className="mt-5 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setNoticeOpen(false)}
+                    className="flex-1 bg-white text-black py-3 font-bold tracking-wider"
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      ) : null}
+
       { }
       <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] animate-pulse-slow"></div>

@@ -11,8 +11,8 @@ Lawn Tennis,men_singles,Men (Singles),16,1,1,399,per_head,2000,,false,14000
 Lawn Tennis,women_singles,Women (Singles),17,1,1,399,per_head,2000,,false,14000
 Lawn Tennis,group_men,Group (Men),118,4,4,1599,team,5000,"4 team members",true,14000
 Lawn Tennis,group_women,Group (Women),119,4,4,1599,team,5000,"4 team members",true,14000
-Badminton,men,Men's Team,11,3,6,2500,team,6000,,true,12000
-Badminton,women,Women's Team,12,3,6,1500,team,6000,,true,12000
+Badminton,men,Men's Team,11,4,5,2500,team,6000,,true,12000
+Badminton,women,Women's Team,12,3,5,1500,team,6000,,true,12000
 Table Tennis,men_team,Men (Team),18,3,5,1200,team,4000,Team,true,15000
 Table Tennis,women_team,Women (Team),19,3,5,1000,team,4000,Team,true,15000
 Table Tennis,men_single,Singles (Men),20,1,1,400,team,2000,,false,15000

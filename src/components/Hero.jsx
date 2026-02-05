@@ -27,7 +27,7 @@ const Hero = () => {
   }, [images.length]);
 
   useEffect(() => {
-    const targetDate = new Date("2026-03-13T09:00:00");
+    const targetDate = new Date("2026-03-12T09:00:00");
 
     const interval = setInterval(() => {
       const now = new Date();

@@ -13,11 +13,9 @@ const Home = () => {
       <Marquee
         items={[
           "Registration Open Now",
-          "Demon Slayer Corps Recruitment",
-          "Win Prizes Worth ₹50k",
           "Prove Your Strength",
           "Blood Sweat & Glory",
-          "Jan 13-15 2026",
+          "March 12-15 2026",
           "Become a Hashira",
         ]}
         speed={30}

@@ -170,11 +170,11 @@ const Accommodation = () => {
                                 <span className="text-white font-mono">+91 96083 84049</span>
                             </div>
                             <div className="flex items-center justify-between p-3 bg-black/20 rounded border border-white/5">
-                                <span className="text-gray-400">Support Line 01(Vivek Modi)</span>
+                                <span className="text-gray-400">Hospitality Head(Vivek Modi)</span>
                                 <span className="text-white font-mono">+91 62037 99098</span>
                             </div>
                             <div className="flex items-center justify-between p-3 bg-black/20 rounded border border-white/5">
-                                <span className="text-gray-400">Support Line 02(Piyush)</span>
+                                <span className="text-gray-400">Hospitality Head(Piyush)</span>
                                 <span className="text-white font-mono">+91 85218 02612</span>
                             </div>
                         </div>

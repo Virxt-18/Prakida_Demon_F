@@ -154,7 +154,7 @@ const SPORTS_DATA = [
   {
     id: "carrom",
     title: "CARROM",
-    icon: Swords,
+    icon: "icons/carrom.png",
     configSport: "Carrom",
     players: "Team / Mixed Doubles",
     category: "Men / Women / Mixed",
@@ -222,7 +222,7 @@ const ESPORTS_DATA = [
   {
     id: "bgmi",
     title: "BGMI",
-    icon: Gamepad2,
+    icon: "icons/bgmi.png",
     configSport: "E-Sports",
     focusCategoryId: "bgmi",
     players: getPlayersRange("E-Sports", "bgmi"),
@@ -252,7 +252,7 @@ const ESPORTS_DATA = [
   {
     id: "free-fire",
     title: "FREE FIRE",
-    icon: Gamepad2,
+    icon: "icons/ff.png",
     configSport: "E-Sports",
     focusCategoryId: "free_fire",
     players: getPlayersRange("E-Sports", "free_fire"),
@@ -587,7 +587,7 @@ const Sports = () => {
                 key={game.id}
                 variants={cardSnap}
                 onClick={() => setSelectedSport(game)}
-                className="group relative bg-white/5 border border-white/10 rounded-sm overflow-hidden hover:border-prakida-flame/50 transition-all duration-500 cursor-pointer"
+                className="group sport-box relative bg-white/5 border border-white/10 rounded-sm overflow-hidden hover:border-prakida-flame/50 transition-all duration-500 cursor-pointer"
               >
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-0 group-hover:opacity-10 transition-opacity duration-700`}

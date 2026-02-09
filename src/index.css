@@ -134,3 +134,21 @@
     display: none;
   }
 }
+
+/*for icons color and hover color*/
+
+.sport-icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+  transition:
+    filter 0.35s ease-in-out,
+}
+
+.sport-box:hover .sport-icon {
+  filter: brightness(0) saturate(100%)
+          invert(68%) sepia(45%) saturate(1200%)
+          hue-rotate(5deg)
+          brightness(108%)
+          contrast(95%);
+}

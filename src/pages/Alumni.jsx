@@ -246,11 +246,11 @@ const Alumni = () => {
           <h2 className="text-2xl font-display font-bold text-white mb-4">
             What you get (₹1599)
           </h2>
-          <p className="text-gray-400 mb-6">
+          {/* <p className="text-gray-400 mb-6">
             Alumni ko free merch rahega + Pro-Nite entry. ₹1599 mei sab kuch.
-          </p>
+          </p> */}
 
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {perks.map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <span className="mt-2 h-2 w-2 rounded-full bg-prakida-flame" />

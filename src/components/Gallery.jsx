@@ -117,10 +117,10 @@ const Gallery = () => {
           </h3>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent mx-auto mt-6"></div>
         </div>
-
+        
         <div
           ref={scrollContainerRef}
-          className="flex md:grid md:grid-cols-4 gap-4 md:auto-rows-[200px] overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-8 md:pb-0 scrollbar-hide touch-pan-x"
+          className="relative z-0 flex md:grid md:grid-cols-4 gap-4 md:auto-rows-[200px] overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-8 md:pb-0 scrollbar-hide touch-pan-x "
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
@@ -144,7 +144,7 @@ const Gallery = () => {
                   <img
                     src={img.src}
                     alt={img.alt}
-                    className="w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                    className="w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-110 grayscale-0 filter lg:grayscale group-hover:grayscale-0"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">

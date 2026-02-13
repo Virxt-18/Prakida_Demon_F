@@ -9,8 +9,9 @@ const Footer = () => {
           <div className="text-center md:text-left md:w-1/3">
             <a
               href="#"
-              className="text-3xl font-display font-bold text-white mb-4 block"
+              className="flex items-center gap-3 text-3xl font-display font-bold text-white mb-4"
             >
+              <img src="/prakida-favicon.png" alt="logo" className="w-8 h-8" />
               PRAKRIDA
             </a>
             <p className="text-gray-500 max-w-sm mb-6">
@@ -85,7 +86,7 @@ const Footer = () => {
                 src="https://maps.google.com/maps?q=BIT%20Mesra%20Patna&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
-                className="filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 delay-100 ease-out"
+                className="grayscale-0 filter lg:grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 delay-100 ease-out"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"

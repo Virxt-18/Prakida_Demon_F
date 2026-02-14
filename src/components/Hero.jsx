@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { heroPunchIn, buttonHover, buttonTap } from "../utils/motion";
 import ParallaxElement from "./ui/ParallaxElement";
+import GradientText from "./ui/GradientText";
 
 const Hero = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -98,19 +99,19 @@ const Hero = () => {
         <div className="absolute inset-0 z-10 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 text-center">
+      <div className="container mx-auto px-6 relative z-10 w-[100vw] text-center">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.div variants={itemVariants} className="mb-4">
-            <span className="px-4 py-1 border border-prakida-flame/50 text-prakida-flame text-[16px] md:text-lg font-bold tracking-widest md:tracking-[0.3em] uppercase backdrop-blur-sm inline-block">
+            <span className="px-4 py-1 border border-prakida-flame/50 text-prakida-flame text-[14px] md:text-lg font-bold tracking-widest md:tracking-[0.3em] uppercase backdrop-blur-sm inline-block">
               BIT PATNA PRESENTS
             </span>
           </motion.div>
 
-          <div className="relative z-20 mix-blend-overlay opacity-90 mb-2">
+          <div className="relative z-20 mix-blend-overlay opacity-90 w-full h-full mb-2 pt-2">
             <ParallaxElement speed={0.5} direction="down">
               <motion.div
                 variants={heroPunchIn}
@@ -118,13 +119,12 @@ const Hero = () => {
                 animate="visible"
               >
                 <h1
-                  className="hero-font text-5xl md:text-9xl lg:text-[10rem] font-display font-black tracking-wide leading-[0.8] text-transparent bg-clip-text
-           bg-[linear-gradient(to_top,#4a0000_0%,#b30000_20%,#ff2a00_40%,#ff7a00_60%,#ffd200_80%,#ffffff_100%)]"
+                  className="hero-font text-[clamp(45px,12vw,1200px)] font-display font-black tracking-wide leading-[1]"
                   style={{
                     textShadow: "0 0 40px rgba(255,255,255,0.1)",
                   }}
                 >
-                  PRAKRIDA
+                  <GradientText>PRAKRIDA</GradientText>
                 </h1>
               </motion.div>
             </ParallaxElement>
@@ -135,14 +135,14 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             transition={{ delay: 0.1 }}
-            className="text-gray-200 text-xl md:text-[26px] max-w-3xl mx-auto mt-8 mb-12 font-light tracking-wide leading-relaxed drop-shadow-md"
+            className="text-gray-200 text-md md:text-[26px] max-w-3xl mx-auto mt-8 mb-12 font-light tracking-wide leading-relaxed drop-shadow-md"
           >
             The arena awaits. Unleash your inner{" "}
             <span className="text-prakida-flame font-bold drop-shadow-glow">
               HASHIRA
             </span>
             .<br />
-            <span className="text-white/80 text-lg">
+            <span className="text-white/80 text-md md:text-[26px]">
               Victory is not given. It is taken.
             </span>
           </motion.p>
@@ -179,7 +179,7 @@ const Hero = () => {
           {}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12 max-w-4xl mx-auto border-t border-white/20 pt-10"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12 max-w-4xl mx-auto border-t mb-6 border-white/20 pt-10"
           >
             {[
               { label: "DAYS", value: timeLeft.days },

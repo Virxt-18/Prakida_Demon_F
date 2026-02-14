@@ -17,7 +17,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -41,19 +41,19 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-black/90 backdrop-blur-md py-4" : "bg-transparent py-6"}`}
+        className={`fixed px-6 w-full z-50 transition-all duration-300 ${scrolled ? "bg-black/90 backdrop-blur-md py-4" : "bg-transparent py-6"}`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 group">
+        <div className="mx-auto max-w-7xl px-4 flex items-center justify-between md:justify-center gap-4">
+          <Link to="/" className="mr-auto flex items-center gap-2 group">
             <img
               src={logo}
               alt="PRAKIDA Logo"
-              className="h-10 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-10 w-10 md:h-14 md:w-14 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
           {}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-3 lg:gap-6">
             {navLinks.map((link) => (
               <GlitchLink
                 key={link.name}
@@ -93,7 +93,7 @@ const Navbar = () => {
     hover:after:scale-x-100 items-center gap-2 text-sm text-gray-300 tracking-wide border-r border-gray-700 pr-4"
                   >
                     <User size={14} className="text-prakida-flame" />
-                    <span className="hidden xl:block ">
+                    <span className="hidden xl:block max-w-[80px] truncate">
                       {user?.displayName?.split(" ")[0] || "SLAYER"}
                     </span>
                   </div>
@@ -118,7 +118,7 @@ const Navbar = () => {
               <motion.div whileHover={buttonHover} whileTap={buttonTap}>
                 <Link
                   to="/login"
-                  className="block px-6 py-2 bg-transparent border border-prakida-flame text-prakida-flame hover:bg-prakida-flame hover:text-white font-bold transition-all duration-300 rounded-sm skew-x-[-12deg] hover:skew-x-0 hover:shadow-[0_0_15px_rgba(244,140,6,0.5)]"
+                  className="block px-6 py-2 bg-transparent border border-prakida-flame text-prakida-flame hover:bg-prakida-flame hover:text-white font-bold transition-all duration-300 rounded-sm skew-x-[-12deg] hover:skew-x-0 hover:shadow-[0_0_15px_rgba(244,140,6,0.5)] max-[10000px]:scale-95"
                 >
                   <span className="block skew-x-[12deg] hover:skew-x-0">
                     LOGIN

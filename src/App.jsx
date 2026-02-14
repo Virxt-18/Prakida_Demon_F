@@ -13,6 +13,7 @@ import NoiseOverlay from "./components/ui/NoiseOverlay";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import AshOverlay from "./components/ui/AshOverlay";
 import PageTransition from "./components/ui/PageTransition";
+import ProfileGuard from "./components/ProfileGuard";
 
 import ScrollPath from "./components/ui/ScrollPath";
 
@@ -45,120 +46,122 @@ const AnimatedRoutes = () => {
           </div>
         }
       >
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/"
-            element={
-              <PageTransition>
-                <Home />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/events"
-            element={
-              <PageTransition>
-                <Events />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/merchandise"
-            element={
-              <PageTransition>
-                <Merchandise />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/sports"
-            element={
-              <PageTransition>
-                <Sports />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <PageTransition>
-                <Contact />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PageTransition>
-                <RegisterSection />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/register/accommodation"
-            element={
-              <PageTransition>
-                <AccommodationRegistration />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/alumni"
-            element={
-              <PageTransition>
-                <Alumni />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <PageTransition>
-                <Dashboard />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <PageTransition>
-                <AdminDashboard />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/tickets"
-            element={
-              <PageTransition>
-                <Tickets />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/accommodation"
-            element={
-              <PageTransition>
-                <Accommodation />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <PageTransition>
-                <Login />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <PageTransition>
-                <Signup />
-              </PageTransition>
-            }
-          />
-        </Routes>
+        <ProfileGuard>
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/"
+              element={
+                <PageTransition>
+                  <Home />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/events"
+              element={
+                <PageTransition>
+                  <Events />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/merchandise"
+              element={
+                <PageTransition>
+                  <Merchandise />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/sports"
+              element={
+                <PageTransition>
+                  <Sports />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <PageTransition>
+                  <Contact />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PageTransition>
+                  <RegisterSection />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/register/accommodation"
+              element={
+                <PageTransition>
+                  <AccommodationRegistration />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/alumni"
+              element={
+                <PageTransition>
+                  <Alumni />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <PageTransition>
+                  <Dashboard />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <PageTransition>
+                  <AdminDashboard />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/tickets"
+              element={
+                <PageTransition>
+                  <Tickets />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/accommodation"
+              element={
+                <PageTransition>
+                  <Accommodation />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PageTransition>
+                  <Login />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PageTransition>
+                  <Signup />
+                </PageTransition>
+              }
+            />
+          </Routes>
+        </ProfileGuard>
       </Suspense>
     </AnimatePresence>
   );

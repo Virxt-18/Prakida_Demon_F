@@ -21,7 +21,7 @@ const ScrollPath = () => {
   const offsetDistance = useTransform(scaleX, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:block h-[600px] w-[40px] pointer-events-none">
+    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:block h-[550px] w-[40px] pointer-events-none">
       <svg
         width="100%"
         height="100%"

@@ -74,7 +74,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="pt-32 min-h-screen container mx-auto px-4">
+    <div className="pt-32 min-h-screen container mx-auto px-4 mb-10">
       <h1 className="text-5xl font-bold md:text-7xl font-russ text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-prakida-flame to-orange-600">
         Send a Crow
       </h1>
@@ -140,7 +140,7 @@ const Contact = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        { }
+        {}
         <div className="space-y-8">
           <h2 className="text-3xl font-bold text-white mb-6">Get in Touch</h2>
 
@@ -184,7 +184,7 @@ const Contact = () => {
           </div>
         </div>
 
-        { }
+        {}
         {!user ? (
           <div className="bg-white/5 border border-white/10 p-8 text-center backdrop-blur-sm">
             <h3 className="text-2xl font-display font-bold text-white mb-4">
@@ -212,15 +212,16 @@ const Contact = () => {
           <motion.form
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="space-y-6 bg-gray-900/50 p-8 border border-gray-800"
+            className="space-y-6 bg-gray-900/50 p-8 border border-gray-800 "
             onSubmit={handleSendMessage}
           >
             {status && (
               <div
-                className={`p-4 rounded border ${status.type === "success"
-                  ? "bg-green-900/20 border-green-500/50 text-green-400"
-                  : "bg-red-900/20 border-red-500/50 text-red-400"
-                  }`}
+                className={`p-4 rounded border ${
+                  status.type === "success"
+                    ? "bg-green-900/20 border-green-500/50 text-green-400"
+                    : "bg-red-900/20 border-red-500/50 text-red-400"
+                }`}
               >
                 {status.message}
               </div>

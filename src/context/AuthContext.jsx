@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   sendEmailVerification,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../lib/firebase";
 
 const AuthContext = createContext({});

@@ -1,27 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { sectionSlide, gridStagger, cardSnap } from "../utils/motion";
-import {
-  Trophy,
-  BookOpen,
-  Users,
-  ArrowRight,
-  Target,
-  Activity,
-  Zap,
-  Maximize2,
-  Gamepad2,
-  Swords,
-  RefreshCw,
-  LogIn,
-  Goal,
-  Dribbble,
-  Volleyball,
-  Brain,
-  Table,
-  Disc,
-  Download,
-} from "lucide-react";
+import { Users, ArrowRight, Maximize2, RefreshCw, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 import SportDetailsModal from "../components/ui/SportDetailsModal";
 import { SPORTS_CONFIG } from "../lib/sportsConfig";
@@ -31,11 +11,6 @@ import { useAuth } from "../context/AuthContext";
 // Import images
 import img1 from "../assets/gallery-1.webp";
 import img2 from "../assets/gallery-2.webp";
-import img3 from "../assets/gallery-3.webp";
-import img4 from "../assets/gallery-4.webp";
-import img5 from "../assets/gallery-5.webp";
-import img6 from "../assets/gallery-6.webp";
-import img7 from "../assets/gallery-7.webp";
 import img8 from "../assets/gallery-8.webp";
 import img9 from "../assets/gallery-9.webp";
 import img10 from "../assets/gallery-10.webp";
@@ -49,10 +24,15 @@ const SPORTS_DATA = [
     players: "11-15 Players",
     category: "Men & Women",
     desc: "The gentleman's game, played with warrior spirit. Determine supremacy on the 22 yards.",
-    detailedDesc: "Cricket at Prakida is more than just a game; it's a battle of nerves and precision. Played on the iconic BIT Mesra grounds, teams from all over the region compete for the 'Crimson Willow' trophy. Expect high-voltage action, strategic depth, and the roar of the crowd as every boundary brings us closer to glory.",
+    detailedDesc:
+      "Cricket at Prakida is more than just a game; it's a battle of nerves and precision. Played on the iconic BIT Mesra grounds, teams from all over the region compete for the 'Crimson Willow' trophy. Expect high-voltage action, strategic depth, and the roar of the crowd as every boundary brings us closer to glory.",
     color: "from-blue-600 to-indigo-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/JFr3Qdh9/cricket1-1.jpg","https://i.ibb.co/jPwgb4mH/IMG-9696.jpg", "https://i.ibb.co/9mnvK5Q8/IMG-9695.jpg"],
+    images: [
+      "https://i.ibb.co/JFr3Qdh9/cricket1-1.jpg",
+      "https://i.ibb.co/jPwgb4mH/IMG-9696.jpg",
+      "https://i.ibb.co/9mnvK5Q8/IMG-9695.jpg",
+    ],
   },
   {
     id: "football",
@@ -62,10 +42,15 @@ const SPORTS_DATA = [
     players: "11 vs 11",
     category: "Men & Women",
     desc: "Passion, precision, and power. 90 minutes of pure adrenaline on the field.",
-    detailedDesc: "The beautiful game takes on a fierce intensity in the Arena. Football at Prakida demands stamina, teamwork, and tactical mastery. From lightning-fast wingers to rock-solid defenders, every player must surpass their limits to secure victory in the knockout stages.",
+    detailedDesc:
+      "The beautiful game takes on a fierce intensity in the Arena. Football at Prakida demands stamina, teamwork, and tactical mastery. From lightning-fast wingers to rock-solid defenders, every player must surpass their limits to secure victory in the knockout stages.",
     color: "from-emerald-600 to-teal-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/Lhqkdj3B/IMG-0189.jpg", "https://i.ibb.co/KjwkbQPf/DSC-0352.jpg", "https://i.ibb.co/b8M3G8t/DSC-0110-1.jpg"],
+    images: [
+      "https://i.ibb.co/Lhqkdj3B/IMG-0189.jpg",
+      "https://i.ibb.co/KjwkbQPf/DSC-0352.jpg",
+      "https://i.ibb.co/b8M3G8t/DSC-0110-1.jpg",
+    ],
   },
   {
     id: "basketball",
@@ -75,10 +60,15 @@ const SPORTS_DATA = [
     players: "5-10 Players",
     category: "Men & Women",
     desc: "Speed, skill, and gravity-defying action on the court. Dominate the paint.",
-    detailedDesc: "The rhythm of the court, the squeak of sneakers, and the swish of the net. Basketball here is about explosive speed and clinical finishing. Whether it's a clutch three-pointer or a defensive block, the energy in the Arena is unmatched as teams compete for court supremacy.",
+    detailedDesc:
+      "The rhythm of the court, the squeak of sneakers, and the swish of the net. Basketball here is about explosive speed and clinical finishing. Whether it's a clutch three-pointer or a defensive block, the energy in the Arena is unmatched as teams compete for court supremacy.",
     color: "from-orange-600 to-red-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/rRwSSxgk/DSC-0148.jpg", "https://i.ibb.co/PZMR6CFk/DSC-0143.jpg", "https://i.ibb.co/nNxkNZgJ/ABH-0324.jpg"],
+    images: [
+      "https://i.ibb.co/rRwSSxgk/DSC-0148.jpg",
+      "https://i.ibb.co/PZMR6CFk/DSC-0143.jpg",
+      "https://i.ibb.co/nNxkNZgJ/ABH-0324.jpg",
+    ],
   },
   {
     id: "badminton",
@@ -88,11 +78,15 @@ const SPORTS_DATA = [
     players: "Singles / Doubles",
     category: "Men & Women",
     desc: "Agility and reflexes pushed to the limit. Smash your way to victory.",
-    detailedDesc: "A test of lightning reflexes and iron endurance. The badminton courts witness high-octane smashes and delicate drops. In the singles and doubles categories, slayers must demonstrate exceptional control and speed to outplay their opponents under the bright lights.",
+    detailedDesc:
+      "A test of lightning reflexes and iron endurance. The badminton courts witness high-octane smashes and delicate drops. In the singles and doubles categories, slayers must demonstrate exceptional control and speed to outplay their opponents under the bright lights.",
     color: "from-purple-600 to-fuchsia-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/4wRvTGvY/DSC-0166.jpg", "https://i.ibb.co/B2KtrG6t/DSCF1675.jpg",
-       "https://i.ibb.co/tTJYb6mS/DSCF1768.jpg"],
+    images: [
+      "https://i.ibb.co/4wRvTGvY/DSC-0166.jpg",
+      "https://i.ibb.co/B2KtrG6t/DSCF1675.jpg",
+      "https://i.ibb.co/tTJYb6mS/DSCF1768.jpg",
+    ],
   },
   {
     id: "volleyball",
@@ -102,11 +96,15 @@ const SPORTS_DATA = [
     players: "6-9 Players",
     category: "Men & Women",
     desc: "Teamwork makes the dream work. Spike, block, and defend your glory.",
-    detailedDesc: "Coordination is the ultimate weapon on the volleyball court. Every set, every dig, and every spike is a testament to the team's synchronicity. Experience the power of the 'Thunder Spike' as teams battle it out in a series of intense sets to reach the finals.",
+    detailedDesc:
+      "Coordination is the ultimate weapon on the volleyball court. Every set, every dig, and every spike is a testament to the team's synchronicity. Experience the power of the 'Thunder Spike' as teams battle it out in a series of intense sets to reach the finals.",
     color: "from-yellow-500 to-amber-800",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/nNjtGKxh/ABH-0254.jpg","https://i.ibb.co/krh0nq6/DSC-0028.jpg",
-       "https://i.ibb.co/1fcbWMCW/DSC-0364.jpg"],
+    images: [
+      "https://i.ibb.co/nNjtGKxh/ABH-0254.jpg",
+      "https://i.ibb.co/krh0nq6/DSC-0028.jpg",
+      "https://i.ibb.co/1fcbWMCW/DSC-0364.jpg",
+    ],
   },
   {
     id: "chess",
@@ -116,11 +114,15 @@ const SPORTS_DATA = [
     players: "5-6 Players",
     category: "Men & Women",
     desc: "The ultimate battle of minds. Checkmate your opponent in silence.",
-    detailedDesc: "A war fought without a single sound. Chess at Prakida is the pinnacle of intellectual combat. In the quiet hall of the Arena, Grandmasters and novices alike engage in a strategic struggle where every move could be their last. Checkmate your way to the top.",
+    detailedDesc:
+      "A war fought without a single sound. Chess at Prakida is the pinnacle of intellectual combat. In the quiet hall of the Arena, Grandmasters and novices alike engage in a strategic struggle where every move could be their last. Checkmate your way to the top.",
     color: "from-gray-600 to-gray-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/xSg1gNjt/DSC-0075.jpg","https://i.ibb.co/dsnLhgKJ/DSC-0120.jpg",
-         "https://i.ibb.co/q8QYzF5/DSC-0121.jpg"],
+    images: [
+      "https://i.ibb.co/xSg1gNjt/DSC-0075.jpg",
+      "https://i.ibb.co/dsnLhgKJ/DSC-0120.jpg",
+      "https://i.ibb.co/q8QYzF5/DSC-0121.jpg",
+    ],
   },
   {
     id: "lawn-tennis",
@@ -134,8 +136,11 @@ const SPORTS_DATA = [
       "Lawn Tennis at Prakida is a test of composure under pressure. Lightning serves, ruthless volleys, and long rallies decide who earns the right to lift the trophy. Registration is per head.",
     color: "from-lime-600 to-green-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/ZRLHX12j/ABH-0296.jpg","https://i.ibb.co/WvM2FJS6/DSCF1715.jpg",
-     "https://i.ibb.co/VWvw8byW/DSCF1716.jpg"],
+    images: [
+      "https://i.ibb.co/ZRLHX12j/ABH-0296.jpg",
+      "https://i.ibb.co/WvM2FJS6/DSCF1715.jpg",
+      "https://i.ibb.co/VWvw8byW/DSCF1716.jpg",
+    ],
   },
   {
     id: "table-tennis",
@@ -149,8 +154,11 @@ const SPORTS_DATA = [
       "From team battles to singles duels and mixed doubles, Table Tennis is pure reflex warfare. Spin-heavy serves and razor-sharp counters decide every point.",
     color: "from-cyan-600 to-sky-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/hRz3C0Zp/DSCF1328.jpg","https://i.ibb.co/s91NxMRT/IMG-0151.jpg",
-         "https://i.ibb.co/gZqqW2WZ/IMG-0158.jpg"],
+    images: [
+      "https://i.ibb.co/hRz3C0Zp/DSCF1328.jpg",
+      "https://i.ibb.co/s91NxMRT/IMG-0151.jpg",
+      "https://i.ibb.co/gZqqW2WZ/IMG-0158.jpg",
+    ],
   },
   {
     id: "carrom",
@@ -164,8 +172,11 @@ const SPORTS_DATA = [
       "Carrom at Prakida blends finesse with clutch decision-making. A single mistake can flip the board—keep your aim steady and finish with style.",
     color: "from-rose-600 to-pink-900",
     rulebook: "/rulebook.pdf",
-    images: ["https://i.ibb.co/cc6q49Qz/DSCF1727.jpg",
-           "https://i.ibb.co/MxJFtrtt/DSCF1732.jpg","https://i.ibb.co/nsn6LSsL/DSCF1735.jpg"],
+    images: [
+      "https://i.ibb.co/cc6q49Qz/DSCF1727.jpg",
+      "https://i.ibb.co/MxJFtrtt/DSCF1732.jpg",
+      "https://i.ibb.co/nsn6LSsL/DSCF1735.jpg",
+    ],
   },
 ];
 
@@ -173,7 +184,8 @@ const getPlayersRange = (sportKey, categoryId) => {
   const config = SPORTS_CONFIG[sportKey];
   const category = config?.categories?.find((c) => c.id === categoryId);
   if (!category) return "";
-  if (category.minPlayers === category.maxPlayers) return `${category.minPlayers} Players`;
+  if (category.minPlayers === category.maxPlayers)
+    return `${category.minPlayers} Players`;
   return `${category.minPlayers}-${category.maxPlayers} Players`;
 };
 
@@ -205,7 +217,8 @@ const getPlayersLabelForSportCard = (sport) => {
   const suffix = perHead ? " (Per Head)" : "";
 
   if (uniqueRanges.length === 1) return `${uniqueRanges[0]} Players${suffix}`;
-  if (uniqueRanges.length <= 3) return `${uniqueRanges.join(" / ")} Players${suffix}`;
+  if (uniqueRanges.length <= 3)
+    return `${uniqueRanges.join(" / ")} Players${suffix}`;
   return `Varies by category${suffix}`;
 };
 
@@ -307,51 +320,54 @@ const Sports = () => {
     return qs ? `/register?${qs}` : "/register";
   };
 
-  const refreshRegisteredEvents = useCallback(async ({ refreshStatuses = false } = {}) => {
-    if (!user) {
-      setRegisteredEvents([]);
-      return;
-    }
-
-    setRegisteredLoading(true);
-    try {
-      const { eventsService } = await import("../services/api/events");
-      const data = await eventsService.getRegisteredEvents();
-      const raw = Array.isArray(data?.events) ? data.events : [];
-
-      if (!refreshStatuses) {
-        setRegisteredEvents(raw);
-        setRegisteredRefreshedAt(new Date());
+  const refreshRegisteredEvents = useCallback(
+    async ({ refreshStatuses = false } = {}) => {
+      if (!user) {
+        setRegisteredEvents([]);
         return;
       }
 
-      const shouldRefreshStatus = (e) => {
-        const s = String(e?.status || "").toLowerCase();
-        return !s || s.includes("pending");
-      };
+      setRegisteredLoading(true);
+      try {
+        const { eventsService } = await import("../services/api/events");
+        const data = await eventsService.getRegisteredEvents();
+        const raw = Array.isArray(data?.events) ? data.events : [];
 
-      const refreshed = await Promise.all(
-        raw.map(async (e) => {
-          if (!shouldRefreshStatus(e)) return e;
-          try {
-            const statusRes = await eventsService.getEventStatus(e.eventId);
-            return { ...e, ...statusRes };
-          } catch {
-            return e;
-          }
-        }),
-      );
+        if (!refreshStatuses) {
+          setRegisteredEvents(raw);
+          setRegisteredRefreshedAt(new Date());
+          return;
+        }
 
-      setRegisteredEvents(refreshed);
-      setRegisteredRefreshedAt(new Date());
-    } catch (err) {
-      console.error("Failed to load registered events:", err);
-      setRegisteredEvents([]);
-      setRegisteredRefreshedAt(new Date());
-    } finally {
-      setRegisteredLoading(false);
-    }
-  }, [user]);
+        const shouldRefreshStatus = (e) => {
+          const s = String(e?.status || "").toLowerCase();
+          return !s || s.includes("pending");
+        };
+
+        const refreshed = await Promise.all(
+          raw.map(async (e) => {
+            if (!shouldRefreshStatus(e)) return e;
+            try {
+              const statusRes = await eventsService.getEventStatus(e.eventId);
+              return { ...e, ...statusRes };
+            } catch {
+              return e;
+            }
+          }),
+        );
+
+        setRegisteredEvents(refreshed);
+        setRegisteredRefreshedAt(new Date());
+      } catch (err) {
+        console.error("Failed to load registered events:", err);
+        setRegisteredEvents([]);
+        setRegisteredRefreshedAt(new Date());
+      } finally {
+        setRegisteredLoading(false);
+      }
+    },
+    [user],
+  );
 
   useEffect(() => {
     // Lightweight refresh on page load: no per-event status calls.
@@ -369,7 +385,9 @@ const Sports = () => {
 
   const getRegistrationForCard = (sport) => {
     const configKey = sport?.configSport;
-    const categories = configKey ? SPORTS_CONFIG[configKey]?.categories || [] : [];
+    const categories = configKey
+      ? SPORTS_CONFIG[configKey]?.categories || []
+      : [];
     const scoped = sport?.focusCategoryId
       ? categories.filter((c) => c.id === sport.focusCategoryId)
       : categories;
@@ -385,8 +403,10 @@ const Sports = () => {
 
   const getStatusPillClass = (status) => {
     const s = String(status || "").toLowerCase();
-    if (s === "confirmed") return "bg-green-900/30 text-green-400 border-green-500/30";
-    if (s.includes("pending")) return "bg-yellow-900/30 text-yellow-400 border-yellow-500/30";
+    if (s === "confirmed")
+      return "bg-green-900/30 text-green-400 border-green-500/30";
+    if (s.includes("pending"))
+      return "bg-yellow-900/30 text-yellow-400 border-yellow-500/30";
     if (s.includes("failed") || s.includes("cancel"))
       return "bg-red-900/30 text-red-400 border-red-500/30";
     return "bg-white/10 text-gray-200 border-white/20";
@@ -408,7 +428,9 @@ const Sports = () => {
           className="text-center mb-16"
         >
           <div className="inline-block px-4 py-1 border border-prakida-flame/30 rounded-full mb-6">
-            <span className="text-prakida-flame text-xs font-mono tracking-widest uppercase">Select your battlefield</span>
+            <span className="text-prakida-flame text-xs font-mono tracking-widest uppercase">
+              Select your battlefield
+            </span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white mb-4 tracking-tighter uppercase italic">
             THE{" "}
@@ -435,7 +457,10 @@ const Sports = () => {
                     : "Refresh registration status"
               }
             >
-              <RefreshCw size={16} className={registeredLoading ? "animate-spin" : ""} />
+              <RefreshCw
+                size={16}
+                className={registeredLoading ? "animate-spin" : ""}
+              />
               {registeredLoading ? "Refreshing" : "Refresh Status"}
             </button>
 
@@ -503,14 +528,20 @@ const Sports = () => {
                 <div className="p-10 relative z-10 h-full flex flex-col">
                   <div className="mb-8 flex justify-between items-start">
                     <div className="p-4 bg-white/5 rounded-sm border border-white/10 group-hover:border-prakida-flame/30 group-hover:bg-prakida-flame/5 transition-all duration-500">
-                      <img src={sport.icon} className="sport-icon w-[32px] h-[32px]"/>
+                      <img
+                        src={sport.icon}
+                        className="sport-icon w-[32px] h-[32px]"
+                      />
                       {/* <sport.icon className="text-white group-hover:text-prakida-flame transition-colors" size={32} /> */}
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase">
                         {categoryLabel}
                       </span>
-                      <Maximize2 className="text-gray-600 group-hover:text-prakida-flame transition-colors" size={16} />
+                      <Maximize2
+                        className="text-gray-600 group-hover:text-prakida-flame transition-colors"
+                        size={16}
+                      />
                     </div>
                   </div>
 
@@ -542,9 +573,7 @@ const Sports = () => {
                     )}
 
                     <div className="flex gap-4">
-                      <button
-                        className="flex-1 bg-white text-black py-4 text-xs font-black uppercase hover:bg-prakida-flame hover:text-white transition-all duration-300 transform group-hover:translate-y-[-2px]"
-                      >
+                      <button className="flex-1 bg-white text-black py-4 text-xs font-black uppercase hover:bg-prakida-flame hover:text-white transition-all duration-300 transform group-hover:translate-y-[-2px]">
                         View Intel
                       </button>
                       <Link
@@ -567,13 +596,15 @@ const Sports = () => {
         <div className="mt-16">
           <div className="text-center mb-10">
             <div className="inline-block px-4 py-1 border border-prakida-flame/30 rounded-full mb-4">
-              <span className="text-prakida-flame text-xs font-mono tracking-widest uppercase">E-Sports Arena</span>
+              <span className="text-prakida-flame text-xs font-mono tracking-widest uppercase">
+                E-Sports Arena
+              </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-display font-black text-white tracking-tighter uppercase italic">
               E-SPORTS
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto font-mono text-xs md:text-sm leading-relaxed mt-3">
-              Choose your game. Each title has its own Event ID.
+              Choose your game.
             </p>
           </div>
 
@@ -602,60 +633,73 @@ const Sports = () => {
                     const feeSummary = summarizeFee(categories);
                     return (
                       <>
-                  <div className="mb-8 flex justify-between items-start">
-                    <div className="p-4 bg-white/5 rounded-sm border border-white/10 group-hover:border-prakida-flame/30 group-hover:bg-prakida-flame/5 transition-all duration-500">
-                      <img src={game.icon} className="sport-icon w-[32px] h-[32px]"/>
-                      {/* <game.icon className="text-white group-hover:text-prakida-flame transition-colors" size={32} /> */}
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase">
-                        EVENT #{SPORTS_CONFIG["E-Sports"].categories.find((c) => c.id === game.focusCategoryId)?.eventID}
-                      </span>
-                      <Maximize2 className="text-gray-600 group-hover:text-prakida-flame transition-colors" size={16} />
-                    </div>
-                  </div>
-
-                  <h3 className="text-4xl font-display font-black text-white mb-3 italic tracking-wide group-hover:translate-x-2 transition-transform duration-500 uppercase">
-                    {game.title}
-                  </h3>
-
-                  <p className="text-gray-400 text-sm mb-8 flex-grow leading-relaxed font-light">
-                    {game.desc}
-                  </p>
-
-                  <div className="space-y-6 pt-8 border-t border-white/10 group-hover:border-prakida-flame/20 transition-colors">
-                    <div className="flex items-center gap-2 text-xs text-gray-400 font-mono tracking-widest uppercase">
-                      <Users size={14} className="text-prakida-flame" />
-                      <span>{game.players || "Team"}</span>
-                    </div>
-
-                    {feeSummary && (
-                      <div className="grid grid-cols-1 gap-3">
-                        <div className="p-3 bg-white/5 border border-white/10 rounded-sm">
-                          <span className="block text-[9px] text-gray-500 font-mono tracking-widest uppercase mb-1">
-                            Fee
-                          </span>
-                          <span className="text-sm font-bold text-white">
-                            {feeSummary}
-                          </span>
+                        <div className="mb-8 flex justify-between items-start">
+                          <div className="p-4 bg-white/5 rounded-sm border border-white/10 group-hover:border-prakida-flame/30 group-hover:bg-prakida-flame/5 transition-all duration-500">
+                            <img
+                              src={game.icon}
+                              className="sport-icon w-[32px] h-[32px]"
+                            />
+                            {/* <game.icon className="text-white group-hover:text-prakida-flame transition-colors" size={32} /> */}
+                          </div>
+                          <div className="flex flex-col items-end gap-2">
+                            <span className="text-[10px] font-mono text-gray-500 tracking-[0.2em] uppercase">
+                              EVENT #
+                              {
+                                SPORTS_CONFIG["E-Sports"].categories.find(
+                                  (c) => c.id === game.focusCategoryId,
+                                )?.eventID
+                              }
+                            </span>
+                            <Maximize2
+                              className="text-gray-600 group-hover:text-prakida-flame transition-colors"
+                              size={16}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
 
-                    <div className="flex gap-4">
-                      <button className="flex-1 bg-white text-black py-4 text-xs font-black uppercase hover:bg-prakida-flame hover:text-white transition-all duration-300 transform group-hover:translate-y-[-2px]">
-                        View Intel
-                      </button>
-                      <Link
-                        to={user ? getRegisterTo(game) : "/login"}
-                        onClick={(e) => e.stopPropagation()}
-                        className="px-6 py-4 border border-white/10 text-white hover:bg-white/10 transition-colors"
-                        title={user ? "Register" : "Login required to register"}
-                      >
-                        <ArrowRight size={16} />
-                      </Link>
-                    </div>
-                  </div>
+                        <h3 className="text-4xl font-display font-black text-white mb-3 italic tracking-wide group-hover:translate-x-2 transition-transform duration-500 uppercase">
+                          {game.title}
+                        </h3>
+
+                        <p className="text-gray-400 text-sm mb-8 flex-grow leading-relaxed font-light">
+                          {game.desc}
+                        </p>
+
+                        <div className="space-y-6 pt-8 border-t border-white/10 group-hover:border-prakida-flame/20 transition-colors">
+                          <div className="flex items-center gap-2 text-xs text-gray-400 font-mono tracking-widest uppercase">
+                            <Users size={14} className="text-prakida-flame" />
+                            <span>{game.players || "Team"}</span>
+                          </div>
+
+                          {feeSummary && (
+                            <div className="grid grid-cols-1 gap-3">
+                              <div className="p-3 bg-white/5 border border-white/10 rounded-sm">
+                                <span className="block text-[9px] text-gray-500 font-mono tracking-widest uppercase mb-1">
+                                  Fee
+                                </span>
+                                <span className="text-sm font-bold text-white">
+                                  {feeSummary}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex gap-4">
+                            <button className="flex-1 bg-white text-black py-4 text-xs font-black uppercase hover:bg-prakida-flame hover:text-white transition-all duration-300 transform group-hover:translate-y-[-2px]">
+                              View Intel
+                            </button>
+                            <Link
+                              to={user ? getRegisterTo(game) : "/login"}
+                              onClick={(e) => e.stopPropagation()}
+                              className="px-6 py-4 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                              title={
+                                user ? "Register" : "Login required to register"
+                              }
+                            >
+                              <ArrowRight size={16} />
+                            </Link>
+                          </div>
+                        </div>
                       </>
                     );
                   })()}
@@ -678,4 +722,4 @@ const Sports = () => {
   );
 };
 
-export default Sports; 
+export default Sports;

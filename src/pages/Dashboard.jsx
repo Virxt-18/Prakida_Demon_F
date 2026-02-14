@@ -4,11 +4,15 @@ import { useAuth } from "../context/AuthContext";
 import { SPORTS_CONFIG } from "../lib/sportsConfig";
 
 import { sectionSlide, buttonHover, buttonTap } from "../utils/motion";
-import { User, Trophy, RefreshCw, BedDouble } from "lucide-react";
+import { User, Trophy, RefreshCw, BedDouble, SquarePen } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [eventRegs, setEventRegs] = useState([]);
@@ -27,6 +31,82 @@ const Dashboard = () => {
   const [accommodationRefreshedAt, setAccommodationRefreshedAt] =
     useState(null);
   const [accommodationError, setAccommodationError] = useState("");
+
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    college: "",
+    gender: "",
+  });
+
+  const [editLoading, setEditLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists()) {
+        setForm({
+          name: snap.data()?.full_name || "",
+          phone: snap.data()?.phone || "",
+          college: snap.data()?.college || "",
+          gender: snap.data()?.gender || "",
+        });
+      }
+      setLoading(false);
+    };
+
+    fetchProfile();
+  }, [user]);
+
+  const handleEditChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleEditSave = async () => {
+    setSaving(true);
+    setMessage("");
+    setError("");
+    if (!form.gender || form.gender === "select") {
+      setError("Please select a valid gender");
+      setSaving(false);
+      return;
+    }
+
+    if (!form.name || form.name.trim() === "") {
+      setError("Please enter a valid name");
+      setSaving(false);
+      return;
+    }
+
+    if (!form.phone && !/^\+?\d{7,15}$/.test(form.phone)) {
+      setError("Please enter a valid phone number");
+      setSaving(false);
+      return;
+    }
+
+    if (!form.college || form.college.trim() === "") {
+      setError("Please enter a valid college name");
+      setSaving(false);
+      return;
+    }
+
+    try {
+      await updateDoc(doc(db, "users", user.uid), {
+        ...form,
+        updatedAt: new Date(),
+      });
+
+      setMessage("Changes saved successfully ✔");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to save changes. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const resolveEventLabel = (eventId) => {
     const id = Number(eventId);
@@ -351,6 +431,95 @@ const Dashboard = () => {
             </div>
           </div>
         </motion.div>
+
+        <div className="mb-14 px-4">
+          <div className="bg-zinc-900/60 border border-white/10 rounded-xl p-6 md:p-8 max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-8 flex items-center justify-center gap-3 text-center">
+              <SquarePen className="text-prakida-flame" />
+              EDIT PROFILE
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+              {/* FULL NAME */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-mono uppercase tracking-widest text-gray-400">
+                  Full Name
+                </label>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleEditChange}
+                  className="bg-black border border-gray-700 p-3 text-white rounded-md focus:outline-none focus:border-prakida-flame"
+                />
+              </div>
+
+              {/* PHONE */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-mono uppercase tracking-widest text-gray-400">
+                  Phone Number
+                </label>
+                <input
+                  name="phone"
+                  type="tel"
+                  inputMode="numeric"
+                  value={form.phone}
+                  onChange={handleEditChange}
+                  className="bg-black border border-gray-700 p-3 text-white rounded-md focus:outline-none focus:border-prakida-flame"
+                />
+              </div>
+
+              {/* COLLEGE */}
+              <div className="flex flex-col gap-1 sm:col-span-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-gray-400">
+                  College
+                </label>
+                <input
+                  name="college"
+                  value={form.college}
+                  onChange={handleEditChange}
+                  className="bg-black border border-gray-700 p-3 text-white rounded-md focus:outline-none focus:border-prakida-flame"
+                />
+              </div>
+
+              {/* GENDER */}
+              <div className="flex flex-col gap-1 sm:col-span-2">
+                <label className="text-xs font-mono uppercase tracking-widest text-gray-400">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={form.gender}
+                  onChange={handleEditChange}
+                  className="bg-black border border-gray-700 p-3 text-white rounded-md focus:outline-none focus:border-prakida-flame"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={handleEditSave}
+                disabled={saving}
+                className="w-full sm:w-auto px-10 py-3 bg-prakida-flame text-white font-bold skew-x-[-12deg] disabled:opacity-60"
+              >
+                <span className="skew-x-[12deg] block">
+                  {saving ? "SAVING..." : "SAVE CHANGES"}
+                </span>
+              </button>
+
+              {message && (
+                <p className="text-green-400 text-sm text-center">{message}</p>
+              )}
+              {error && (
+                <p className="text-red-400 text-sm text-center">{error}</p>
+              )}
+            </div>
+          </div>
+        </div>
 
         <div className="mb-14">
           <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-8 flex items-center justify-center gap-3 text-center">

@@ -141,7 +141,7 @@ const Tickets = () => {
         </div>
       ) : null}
 
-      { }
+      {}
       <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full filter blur-[128px] animate-pulse-slow"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-prakida-flame rounded-full filter blur-[128px] animate-pulse-slow animation-delay-2000"></div>
@@ -154,7 +154,7 @@ const Tickets = () => {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         >
-          { }
+          {}
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-prakida-flame rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <div className="relative bg-black border border-white/10 rounded-lg p-8 aspect-[4/5] flex flex-col justify-between overflow-hidden">
@@ -172,7 +172,7 @@ const Tickets = () => {
                 <h2 className="text-4xl md:text-6xl font-display font-bold text-white leading-none">
                   PRO
                   <br />
-                  NIGHT
+                  NITE
                 </h2>
               </div>
 
@@ -193,7 +193,7 @@ const Tickets = () => {
             </div>
           </div>
 
-          { }
+          {}
           <div className="space-y-8">
             <div>
               <h1 className="text-3xl font-display text-white mb-2 flex items-center gap-3">

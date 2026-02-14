@@ -9,7 +9,7 @@ const GlitchLink = ({ to, text, kanji }) => {
   return (
     <Link
       to={to}
-      className={`font-medium tracking-wide text-sm relative group px-2 py-1 transition-colors duration-300 ${isActive ? "text-prakida-flame" : "text-gray-300 hover:text-white"}`}
+      className={`font-medium whitespace-nowrap truncate tracking-wide text-sm max-[1000px]:text-[12px] relative group px-2 py-1 transition-colors duration-300 ${isActive ? "text-prakida-flame" : "text-gray-300 hover:text-white"}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
